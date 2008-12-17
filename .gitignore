@@ -2,3 +2,5 @@ log/*.log
 config/database.yml
 config/mongrel_cluster.yml
 .autotest
+nbproject
+nbproject/*.*
