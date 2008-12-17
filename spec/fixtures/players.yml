@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Player1
+  active: true
+  raking: 21.99
+
+two:
+  name: Player2
+  active: true
+  raking: 19.99
+
+incative:
+  name: Inactive
+  active: false
+  raking: 0
