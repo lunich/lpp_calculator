@@ -3,7 +3,7 @@ class CreatePlayers < ActiveRecord::Migration
     create_table :players do |t|
       t.string :name, :null => false, :default => "<noname>"
       t.boolean :active, :null => false, :default => false
-      t.decimal :raking, :precision => 8, :scale => 2, :null => false, :default => 0
+      t.decimal :raking, :precision => 8, :scale => 4, :null => false, :default => 0
     end
   end
 

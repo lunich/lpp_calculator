@@ -1,0 +1,37 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  player1: one
+  player2: two
+  result1: 5
+  result2: 4
+  time: 2009-01-12 21:58:02
+  type: Match
+  qualify: 0
+  raking1: 9.99
+  raking2: -9.99
+
+two:
+  player1: one
+  player2: two
+  result1: 4
+  result2: 5
+  time: 2009-01-12 21:58:02
+  type: Match
+  qualify: 0
+  raking1: -9.99
+  raking2: 9.99
+  prev_event1: one
+  prev_event2: one
+
+three:
+  player1: one
+  player2: three
+  result1: 1
+  result2: 8
+  time: 2009-01-12 21:58:02
+  type: Match
+  qualify: 0
+  raking1: -9.99
+  raking2: 9.99
+  prev_event1: two

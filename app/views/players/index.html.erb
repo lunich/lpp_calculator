@@ -1,0 +1,16 @@
+<table id="players">
+  <tbody>
+    <tr id="header">
+      <th>#</th>
+      <th>Name</th>
+      <th>Raking</th>
+    </tr>
+    <% @players.each do |p| %>
+      <tr id="player-<%= p.id %>">
+        <td><%= p.calculated_place %>.</td>
+        <td><%= p.name %></td>
+        <td><%= p.raking %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

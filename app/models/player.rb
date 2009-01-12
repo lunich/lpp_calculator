@@ -11,8 +11,14 @@ class Player < ActiveRecord::Base
 
   before_create :reset_raking
 
+  def events(options = {})
+    options = options.merge(
+      :conditions => ["player1_id=? OR player2_id=?", self.id, self.id])
+    Event.find(:all, options)
+  end
+
   def self.all_active
-    find(:all, :conditions => ["active!=?", false], :order => "raking DESC")
+    all(:conditions => ["active!=?", false], :order => "raking DESC")
   end
 
   def calculated_place

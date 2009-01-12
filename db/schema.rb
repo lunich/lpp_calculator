@@ -9,7 +9,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081216201902) do
+ActiveRecord::Schema.define(:version => 20090112195802) do
+
+  create_table "events", :force => true do |t|
+    t.integer  "player1_id"
+    t.integer  "player2_id"
+    t.integer  "result1"
+    t.integer  "result2"
+    t.datetime "time"
+    t.string   "type"
+    t.integer  "qualify"
+    t.decimal  "raking1",          :precision => 8, :scale => 4
+    t.decimal  "raking2",          :precision => 8, :scale => 4
+    t.integer  "prev_event1_id"
+    t.integer  "prev_event2_id"
+    t.string   "comment"
+    t.integer  "tournament_id"
+    t.integer  "tournament_place"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lpp_matches", :force => true do |t|
     t.datetime "time",                                        :null => false

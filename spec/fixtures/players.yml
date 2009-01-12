@@ -10,6 +10,11 @@ two:
   active: true
   raking: 19.99
 
+three:
+  name: Player3
+  active: true
+  raking: 18.99
+
 incative:
   name: Inactive
   active: false
