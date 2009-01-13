@@ -27,4 +27,17 @@ describe Tournament do
     t.errors.on(:start).should_not be_nil
     t.valid?.should == false
   end
+
+  describe "should has many" do
+    fixtures :tournaments
+    before(:each) do
+      @tournament = tournaments(:one)
+    end
+    it "tours" do
+      @tournament.tours.should_not be_nil
+    end
+    it "players" do
+      @tournament.players.should_not be_nil
+    end
+  end
 end

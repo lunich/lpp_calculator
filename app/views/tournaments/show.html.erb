@@ -1,0 +1,14 @@
+<table id="tournament-<%= @tournament.id %>">
+  <tbody>
+    <tr id="header">
+      <th>#</th>
+      <th>Name</th>
+    </tr>
+    <% @tournament.tours.each do |t| %>
+      <tr id="tour-<%= t.id %>">
+        <td><%= t.tournament_place %>.</td>
+        <td><%= t.player.name unless t.player.nil? %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
