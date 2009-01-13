@@ -6,6 +6,10 @@ class Event < ActiveRecord::Base
 
   before_create :assign_prev_event
 
+  def raking(player)
+    player1 == player ? raking1 : 0
+  end
+
 protected
   def assign_prev_event
     player = Player.find(player1_id)

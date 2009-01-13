@@ -35,6 +35,19 @@ describe Event do
       @event.prev_event1.should == @last_p1_event
     end
   end
+
+  describe "raking" do
+    before(:each) do
+      @event = events(:one)
+    end
+    it "should return player's result" do
+      @event.raking(@event.player1).should == @event.raking1
+    end
+    it "should return 0 for invalid player" do
+      @event.raking(nil).should == 0
+    end
+  end
+
 private
   def check_created_event(e)
     e.valid?.should == true

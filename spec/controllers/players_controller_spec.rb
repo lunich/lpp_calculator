@@ -7,11 +7,13 @@ describe PlayersController do
   end
 
   describe "routes" do
-    [["index", ""]].each do |action, path|
-      it "#{action} should be valid" do
-        route_for(:controller => "players", :action => action).should == "/players#{path}"
-        params_from(:get, "/players#{path}").should == {:controller => "players", :action => action}
-      end
+    it "should be valid for index" do
+      route_for(:controller => "players", :action => "index").should == "/players"
+      params_from(:get, "/players").should == { :controller => "players", :action => "index" }
+    end
+    it "should be valid for show" do
+      route_for(:controller => "players", :action => "show", :id => 12).should == "/players/12"
+      params_from(:get, "/players/12").should == { :controller => "players", :action => "show", :id => "12" }
     end
   end
 

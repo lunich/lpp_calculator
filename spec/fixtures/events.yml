@@ -27,11 +27,11 @@ two:
 three:
   player1: one
   player2: three
-  result1: 1
-  result2: 8
+  result1: 8
+  result2: 1
   time: 2009-01-12 21:58:02
   type: Match
   qualify: 0
-  raking1: -9.99
-  raking2: 9.99
+  raking1: 22
+  raking2: 2
   prev_event1: two

@@ -17,6 +17,28 @@ class Player < ActiveRecord::Base
     Event.find(:all, options)
   end
 
+  def qualifies
+    Event.find(:all,
+      :conditions => ["type=? AND ((qualify=1 AND player1_id=?) OR (qualify=2 AND player2_id=?))",
+        "Match", self.id, self.id])
+  end
+
+  def matches
+    Event.find(:all,
+      :conditions => ["type=? AND qualify=0 AND (player1_id=? OR player2_id=?)",
+        "Match", self.id, self.id])
+  end
+
+  def self.recalculate_rakings
+    all_active.each do |player|
+      res = 0
+      player.matches.each do |m|
+        res += m.raking(player)
+      end
+      player.update_attributes(:raking => res)
+    end
+  end
+
   def self.all_active
     all(:conditions => ["active!=?", false], :order => "raking DESC")
   end

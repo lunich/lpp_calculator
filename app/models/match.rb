@@ -9,6 +9,10 @@ class Match < Event
 
   before_create :assign_prev_events
 
+  def raking(player)
+    player1 == player ? raking1 : player2 == player ? raking2 : 0
+  end
+
 protected
   def assign_prev_events
     player1 = Player.find(player1_id)

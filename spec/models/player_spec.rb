@@ -97,6 +97,22 @@ describe Player do
     end
   end
 
+  describe "recalculate raking" do
+    fixtures :players, :events
+    it "should update players' rakings" do
+      players = Player.all_active
+      Player.recalculate_rakings
+      players.each do |player|
+        raking = 0
+        player.matches.each do |event|
+          raking += event.raking(player)
+        end
+        player.reload
+        player.raking.should == raking
+      end
+    end
+  end
+
 private
   def check_created_player(p)
     p.valid?.should == true
