@@ -23,7 +23,7 @@ USE `lunich_lpp`;
 #
 # Table structure for table events
 #
-
+DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` int(11) NOT NULL auto_increment,
   `player1_id` int(11) default NULL,
@@ -289,6 +289,7 @@ INSERT INTO `events` VALUES (367,33,NULL,NULL,NULL,'2008-10-25 00:00:00','Tour',
 # Table structure for table players
 #
 
+DROP TABLE IF EXISTS `players`;
 CREATE TABLE `players` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '<noname>',
@@ -353,6 +354,7 @@ INSERT INTO `players` VALUES (47,'Fima',1,2.516);
 # Table structure for table schema_migrations
 #
 
+DROP TABLE IF EXISTS `schema_migrations`;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL default '',
   UNIQUE KEY `unique_schema_migrations` (`version`)
@@ -371,6 +373,7 @@ INSERT INTO `schema_migrations` VALUES ('20090113093850');
 # Table structure for table tournaments
 #
 
+DROP TABLE IF EXISTS `tournaments`;
 CREATE TABLE `tournaments` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) default NULL,
