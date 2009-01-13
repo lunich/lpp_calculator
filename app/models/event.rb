@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  belongs_to :player1, :class_name => "Player"
   belongs_to :prev_event1, :class_name => "Event"
 
   validates_presence_of :player1_id

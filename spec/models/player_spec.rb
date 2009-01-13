@@ -18,7 +18,7 @@ describe Player do
 
   describe "field" do
     [
-      [:name, ["A" * 20], [nil, "", "A" * 21, "12"]],
+      [:name, ["A" * 20], [nil, "", "A" * 21, "1"]],
       [:active, [true, false], [nil, ""]],
       [:raking, ["123", 12, 9999], [nil, "", -1, 10000]],
     ].each do |attr, valids, invalids|

@@ -1,6 +1,6 @@
 class Player < ActiveRecord::Base
   validates_presence_of :name
-  validates_length_of :name, :within => 3..20
+  validates_length_of :name, :within => 2..20
   validates_uniqueness_of :name
 
   validates_inclusion_of :active, :in => [true, false]
@@ -29,13 +29,35 @@ class Player < ActiveRecord::Base
         "Match", self.id, self.id])
   end
 
+  def tournaments
+    Event.find(:all,
+      :conditions => ["type=? AND player1_id=?",
+        "Tour", self.id])
+  end
+
   def self.recalculate_rakings
-    all_active.each do |player|
-      res = 0
-      player.matches.each do |m|
-        res += m.raking(player)
+    Player.transaction do
+      all_active.each do |player|
+        res = 0
+        if player.qualifies.size == 4
+          sum = []
+          player.qualifies.each do |q|
+            sum << q.raking(player)
+          end
+          sum.sort!
+          0.upto(2) do |i|
+            res += sum[i]
+          end
+          res /= 3
+        end
+        player.matches.each do |m|
+          res += m.raking(player)
+        end
+        player.tournaments.each do |t|
+          res += t.raking(player)
+        end
+        player.update_attributes(:raking => res)
       end
-      player.update_attributes(:raking => res)
     end
   end
 
