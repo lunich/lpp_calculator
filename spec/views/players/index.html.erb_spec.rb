@@ -22,7 +22,7 @@ describe "index" do
         with_tag("tr#player-#{p.id}") do
           with_tag("td", "#{p.calculated_place}.")
           with_tag("td", p.name)
-          with_tag("td", p.raking)
+          with_tag("td", "#{p.raking}")
         end
       end
     end

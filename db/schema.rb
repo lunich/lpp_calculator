@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090112195802) do
+ActiveRecord::Schema.define(:version => 20090113093850) do
 
   create_table "events", :force => true do |t|
     t.integer  "player1_id"
@@ -61,7 +61,18 @@ ActiveRecord::Schema.define(:version => 20090112195802) do
   create_table "players", :force => true do |t|
     t.string  "name",                                 :default => "<noname>", :null => false
     t.boolean "active",                               :default => false,      :null => false
-    t.decimal "raking", :precision => 8, :scale => 2, :default => 0.0,        :null => false
+    t.decimal "raking", :precision => 8, :scale => 4, :default => 0.0,        :null => false
+  end
+
+  create_table "tournaments", :force => true do |t|
+    t.string   "name"
+    t.datetime "start"
+    t.datetime "end"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "total_raking", :precision => 8, :scale => 4
+    t.decimal  "coeff",        :precision => 8, :scale => 4
+    t.decimal  "raking",       :precision => 8, :scale => 4
   end
 
 end

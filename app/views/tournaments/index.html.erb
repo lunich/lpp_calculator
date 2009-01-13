@@ -1,0 +1,24 @@
+<table id="tournaments">
+  <tbody>
+    <tr id="header">
+      <th>#</th>
+      <th>Name</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Total Raking</th>
+      <th>Coeff</th>
+      <th>Raking</th>
+    </tr>
+    <% @tournaments.each_with_index do |t, n| %>
+      <tr id="tournament-<%= t.id %>">
+        <td><%= n + 1 %>.</td>
+        <td><%= link_to(t.name, tournament_path(t)) %></td>
+        <td><%= t.start.strftime("%Y-%m-%d") %></td>
+        <td><%= t.end.strftime("%Y-%m-%d") unless t.end.nil? %></td>
+        <td><%= t.total_raking %></td>
+        <td><%= t.coeff %></td>
+        <td><%= t.raking %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

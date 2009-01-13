@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Tounament 1
+  start: 2008-01-13 11:16:16
+  end: 2009-01-13 11:16:16
+  total_raking: 100
+  coeff: 1
+  raking: 100
+
+two:
+  name: Tounament 2
+  start: 2008-11-13 11:16:16
+  end: 2008-11-13 11:16:16
+  total_raking: 100
+  coeff: 0.8
+  raking: 80
