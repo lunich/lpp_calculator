@@ -16,7 +16,7 @@
 # ------------------------------------------------------
 # Server version 4.1.21-community-nt
 
-USE `lpp`;
+USE `lunich_lpp`;
 
 /*!40101 SET NAMES cp1251 */;
 
