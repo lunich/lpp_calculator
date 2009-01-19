@@ -4,17 +4,17 @@ describe Event do
   fixtures :players, :events
   before(:each) do
     @player1 = players(:one)
-    @last_p1_event = @player1.events.last
-    @last_p1_event.should_not be_nil
+    @last_event = @player1.events.last
+    @last_event.should_not be_nil
     @valid_attributes = {
-      :player1_id => @player1.id,
+      :player_id => @player1.id,
       :time => Time.now,
     }
   end
 
   describe "create" do
     [
-      :player1_id,
+      :player_id,
       :time,
     ].each do |attr|
       it "should require #{attr}" do
@@ -26,13 +26,15 @@ describe Event do
 
   describe "create" do
     before(:each) do
-      @event = Event.create(@valid_attributes)
+      @event = Event.create!(@valid_attributes)
     end
     it "should create a new instance given valid attributes" do
       check_created_event(@event)
     end
-    it "should assign prev event" do
-      @event.prev_event1.should == @last_p1_event
+    it "should assign prev and next events" do
+      @event.prev.should == @last_event
+      @last_event.reload
+      @last_event.next.should == @event
     end
   end
 
@@ -41,7 +43,7 @@ describe Event do
       @event = events(:one)
     end
     it "should return player's result" do
-      @event.raking(@event.player1).should == @event.raking1
+      @event.raking(@event.player).should == @event.raking1
     end
     it "should return 0 for invalid player" do
       @event.raking(nil).should == 0

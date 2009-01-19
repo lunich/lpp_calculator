@@ -1,19 +1,26 @@
 class Event < ActiveRecord::Base
-  belongs_to :player1, :class_name => "Player"
-  belongs_to :prev_event1, :class_name => "Event"
+  belongs_to :player
+  belongs_to :opponent, :class_name => "Player"
+  belongs_to :prev, :class_name => "Event"
+  belongs_to :next, :class_name => "Event"
 
-  validates_presence_of :player1_id
+  validates_presence_of :player_id
   validates_presence_of :time
 
-  before_create :assign_prev_event
+  after_create :assign_list_events
 
-  def raking(player)
-    player1 == player ? raking1 : 0
+  def raking(p)
+    self.player == p ? raking1 : 0
   end
 
 protected
-  def assign_prev_event
-    player = Player.find(player1_id)
-    self.prev_event1 = player.events.last
+  def assign_list_events
+    Event.transaction do
+      l = self.player.events.last(:conditions => ["id!=?", self.id])
+      unless l.nil?
+        self.prev = l
+        l.update_attributes(:next_id => self.id)
+      end
+    end
   end
 end

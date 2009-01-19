@@ -11,29 +11,10 @@ class Player < ActiveRecord::Base
 
   before_create :reset_raking
 
-  def events(options = {})
-    options = options.merge(
-      :conditions => ["player1_id=? OR player2_id=?", self.id, self.id])
-    Event.find(:all, options)
-  end
-
-  def qualifies
-    Event.find(:all,
-      :conditions => ["type=? AND ((qualify=1 AND player1_id=?) OR (qualify=2 AND player2_id=?))",
-        "Match", self.id, self.id])
-  end
-
-  def matches
-    Event.find(:all,
-      :conditions => ["type=? AND qualify=0 AND (player1_id=? OR player2_id=?)",
-        "Match", self.id, self.id])
-  end
-
-  def tournaments
-    Event.find(:all,
-      :conditions => ["type=? AND player1_id=?",
-        "Tour", self.id])
-  end
+  has_many :events, :order => "time"
+  has_many :matches
+  has_many :tours
+  has_many :qualifies, :class_name => "Match", :conditions => "qualify=1"
 
   def self.recalculate_rakings
     Player.transaction do
@@ -50,11 +31,8 @@ class Player < ActiveRecord::Base
           end
           res /= 3
         end
-        player.matches.each do |m|
+        (player.matches + player.tours).each do |m|
           res += m.raking(player)
-        end
-        player.tournaments.each do |t|
-          res += t.raking(player)
         end
         player.update_attributes(:raking => res)
       end

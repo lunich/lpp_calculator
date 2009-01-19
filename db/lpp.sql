@@ -1,33 +1,27 @@
 # SQLFront 3.2  (Build 14.11)
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES latin1 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='SYSTEM' */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE */;
-/*!40101 SET SQL_MODE='' */;
+/*!40101 SET SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES */;
 /*!40103 SET SQL_NOTES='ON' */;
 
 
-# Host: localhost    Database: lpp
+# Host: localhost    Database: lunich_lpp
 # ------------------------------------------------------
-# Server version 4.1.21-community-nt
+# Server version 5.0.51b-community-nt
 
 USE `lunich_lpp`;
-
-/*!40101 SET NAMES cp1251 */;
 
 #
 # Table structure for table events
 #
-DROP TABLE IF EXISTS `events`;
+
 CREATE TABLE `events` (
   `id` int(11) NOT NULL auto_increment,
-  `player1_id` int(11) default NULL,
-  `player2_id` int(11) default NULL,
+  `player_id` int(11) default NULL,
+  `opponent_id` int(11) default NULL,
   `result1` int(11) default NULL,
   `result2` int(11) default NULL,
   `time` datetime default NULL,
@@ -35,19 +29,21 @@ CREATE TABLE `events` (
   `qualify` int(11) default NULL,
   `raking1` decimal(8,4) default NULL,
   `raking2` decimal(8,4) default NULL,
-  `prev_event1_id` int(11) default NULL,
-  `prev_event2_id` int(11) default NULL,
+  `prev_id` int(11) default NULL,
+  `next_id` int(11) default NULL,
   `comment` varchar(255) default NULL,
   `tournament_id` int(11) default NULL,
   `tournament_place` int(11) default NULL,
   `created_at` datetime default NULL,
   `updated_at` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=368 DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table events
 #
+
+/*!40101 SET NAMES cp1251 */;
 
 INSERT INTO `events` VALUES (133,6,16,5,4,'2007-09-08 00:00:00','Match',2,0,53.9096,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `events` VALUES (134,17,7,5,4,'2007-09-20 00:00:00','Match',1,57.2487,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -285,22 +281,25 @@ INSERT INTO `events` VALUES (365,32,NULL,NULL,NULL,'2008-10-25 00:00:00','Tour',
 INSERT INTO `events` VALUES (366,23,NULL,NULL,NULL,'2008-10-25 00:00:00','Tour',NULL,17.6066,NULL,NULL,NULL,NULL,6,21,NULL,NULL);
 INSERT INTO `events` VALUES (367,33,NULL,NULL,NULL,'2008-10-25 00:00:00','Tour',NULL,17.6066,NULL,NULL,NULL,NULL,6,21,NULL,NULL);
 
+/*!40101 SET NAMES utf8 */;
+
 #
 # Table structure for table players
 #
 
-DROP TABLE IF EXISTS `players`;
 CREATE TABLE `players` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '<noname>',
   `active` tinyint(1) NOT NULL default '0',
   `raking` decimal(8,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table players
 #
+
+/*!40101 SET NAMES cp1251 */;
 
 INSERT INTO `players` VALUES (1,'Vladimir T',1,131.4718);
 INSERT INTO `players` VALUES (2,'Den',1,142.4378);
@@ -347,14 +346,15 @@ INSERT INTO `players` VALUES (42,'Vadim Gl',1,14.9403);
 INSERT INTO `players` VALUES (43,'Pripara',1,14.9403);
 INSERT INTO `players` VALUES (44,'Nikolay',1,13.9719);
 INSERT INTO `players` VALUES (45,'Peria',1,1.9877);
-INSERT INTO `players` VALUES (46,'ήπΰ',1,0);
+INSERT INTO `players` VALUES (46,'Π®Ρ€Π°',1,0);
 INSERT INTO `players` VALUES (47,'Fima',1,2.516);
+
+/*!40101 SET NAMES utf8 */;
 
 #
 # Table structure for table schema_migrations
 #
 
-DROP TABLE IF EXISTS `schema_migrations`;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL default '',
   UNIQUE KEY `unique_schema_migrations` (`version`)
@@ -364,16 +364,20 @@ CREATE TABLE `schema_migrations` (
 # Dumping data for table schema_migrations
 #
 
+/*!40101 SET NAMES cp1251 */;
+
 INSERT INTO `schema_migrations` VALUES ('20081216201902');
 INSERT INTO `schema_migrations` VALUES ('20090112195802');
 INSERT INTO `schema_migrations` VALUES ('20090113091616');
 INSERT INTO `schema_migrations` VALUES ('20090113093850');
+INSERT INTO `schema_migrations` VALUES ('20090119212816');
+
+/*!40101 SET NAMES utf8 */;
 
 #
 # Table structure for table tournaments
 #
 
-DROP TABLE IF EXISTS `tournaments`;
 CREATE TABLE `tournaments` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) default NULL,
@@ -385,11 +389,13 @@ CREATE TABLE `tournaments` (
   `coeff` decimal(8,4) default NULL,
   `raking` decimal(8,4) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table tournaments
 #
+
+/*!40101 SET NAMES cp1251 */;
 
 INSERT INTO `tournaments` VALUES (1,'LPP-1','2006-06-01 00:00:00','2007-01-27 00:00:00',NULL,NULL,439,1,439);
 INSERT INTO `tournaments` VALUES (2,'Bingo Challenge','2007-02-17 00:00:00','2007-02-17 00:00:00',NULL,NULL,38,0.56,21.23);
@@ -399,11 +405,8 @@ INSERT INTO `tournaments` VALUES (5,'BASH!-2008','2008-07-24 00:00:00','2008-07-
 INSERT INTO `tournaments` VALUES (6,'LPP-3','2008-03-15 00:00:00','2008-10-25 00:00:00',NULL,NULL,543,1,543);
 INSERT INTO `tournaments` VALUES (7,'LPP-4','2008-11-15 00:00:00',NULL,NULL,NULL,948,1,948);
 
-/*!40101 SET NAMES latin1 */;
+/*!40101 SET NAMES utf8 */;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
