@@ -19,6 +19,9 @@ describe TournamentsController do
       route_for(:controller => "tournaments", :action => "new").should == "/tournaments/new"
       params_from(:get, "/tournaments/new").should == { :controller => "tournaments", :action => "new" }
     end
+    it "should be valid for create" do
+      params_from(:post, "/tournaments").should == { :controller => "tournaments", :action => "create" }
+    end
   end
 
   describe "index" do
@@ -82,6 +85,38 @@ describe TournamentsController do
     end
     it "should render valid template" do
       response.should render_template("tournaments/new")
+    end
+  end
+
+  describe "create" do
+    before(:each) do
+      @tournament = mock_model(Tournament, :save => true)
+      @valid_attributes = {
+        :tournament => {
+          :name => "SPP1",
+          :start => Time.now - 12.hours,
+          :end => Time.now,
+          :total_raking => 91
+        }
+      }
+      Tournament.stub!(:new).and_return(@tournament)
+    end
+    it "should redirect if success" do
+      post "create", @valid_attributes
+      flash[:notice].should == "Tournament successfully created"
+      response.should be_redirect
+      response.should redirect_to(tournaments_path)
+    end
+    it "should render new if failed" do
+      @tournament.stub!(:save => false)
+      post "create", @valid_attributes
+      flash[:error].should == "Can't create tournament"
+      response.should be_success
+      response.should render_template("tournaments/new")
+    end
+    it "should call new and save" do
+      post "create", @valid_attributes
+      Tournament.should_receive(:new).with(@valid_attributes).and_return(@tournament)
     end
   end
 end
