@@ -6,4 +6,8 @@ class TournamentsController < ApplicationController
   def show
     @tournament = Tournament.find(params[:id], :include => { :tours => :player })
   end
+
+  def new
+    @tournament = Tournament.new
+  end
 end

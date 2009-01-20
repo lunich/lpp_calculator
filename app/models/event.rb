@@ -1,6 +1,5 @@
 class Event < ActiveRecord::Base
   belongs_to :player
-  belongs_to :opponent, :class_name => "Player"
   belongs_to :prev, :class_name => "Event"
   belongs_to :next, :class_name => "Event"
 
@@ -9,8 +8,8 @@ class Event < ActiveRecord::Base
 
   after_create :assign_list_events
 
-  def raking(p)
-    self.player == p ? raking1 : 0
+  def raking(p = nil)
+    p == self.player ? raking1 : 0
   end
 
 protected

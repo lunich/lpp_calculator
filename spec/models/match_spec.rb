@@ -30,7 +30,7 @@ describe Match do
 
   describe "create" do
     before(:each) do
-      @count = @player1.events.count
+      @count = @player1.matches.count
       @last_event = @player1.events.last
       @last_event.should_not be_nil
       @event = Match.create(@valid_attributes)
@@ -42,8 +42,8 @@ describe Match do
       @event.player.should == @player1
       @event.opponent.should == @player2
     end
-    it "should increase plyers' events size" do
-      @player1.events.count.should == @count + 1
+    it "should increase plyers' matches size" do
+      @player1.matches.count.should == @count + 1
     end
     it "should assign prev and next events" do
       @event.prev.should == @last_event

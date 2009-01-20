@@ -15,6 +15,10 @@ describe TournamentsController do
       route_for(:controller => "tournaments", :action => "show", :id => 12).should == "/tournaments/12"
       params_from(:get, "/tournaments/12").should == { :controller => "tournaments", :action => "show", :id => "12" }
     end
+    it "should be valid for new" do
+      route_for(:controller => "tournaments", :action => "new").should == "/tournaments/new"
+      params_from(:get, "/tournaments/new").should == { :controller => "tournaments", :action => "new" }
+    end
   end
 
   describe "index" do
@@ -50,8 +54,34 @@ describe TournamentsController do
     it "should success" do
       response.should be_success
     end
-    it "should assign players" do
+    it "should assign new tournament on GET show" do
+      assigns[:tournament].should == @tournament
+    end
+    it "should find tournament on GET show" do
       Tournament.should_receive(:find).and_return(@tournament)
+    end
+    it "should render valid template" do
+      response.should render_template("tournaments/show")
+    end
+  end
+
+  describe "new" do
+    before(:each) do
+      @tournament = mock_model(Tournament)
+      Tournament.stub!(:new).and_return(@tournament)
+      get :new
+    end
+    it "should success" do
+      response.should be_success
+    end
+    it "should return new tournament on GET new" do
+      Tournament.should_receive(:new).and_return(@tournament)
+    end
+    it "should assign new tournament on GET new" do
+      assigns[:tournament].should == @tournament
+    end
+    it "should render valid template" do
+      response.should render_template("tournaments/new")
     end
   end
 end
