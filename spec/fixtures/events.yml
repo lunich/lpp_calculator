@@ -46,3 +46,76 @@ three:
   raking1: 22
   raking2: 2
   prev: two
+
+raker_q1:
+  player: raker
+  opponent: one
+  result1: 1
+  result2: 8
+  time: <%= (Time.now - 7.days).to_s(:db) %>
+  type: Match
+  qualify: 1
+  raking1: 21
+  raking2: 0
+  next: raker_q2
+
+raker_q2:
+  player: raker
+  opponent: two
+  result1: 2
+  result2: 7
+  time: <%= (Time.now - 6.days).to_s(:db) %>
+  type: Match
+  qualify: 1
+  raking1: 22
+  raking2: 0
+  prev: raker_q1
+  next: raker_q3
+
+raker_q3:
+  player: raker
+  opponent: three
+  result1: 3
+  result2: 6
+  time: <%= (Time.now - 5.days).to_s(:db) %>
+  type: Match
+  qualify: 1
+  raking1: 23
+  raking2: 0
+  prev: raker_q2
+  next: raker_q4
+
+raker_q4:
+  player: raker
+  opponent: four
+  result1: 4
+  result2: 5
+  time: <%= (Time.now - 4.days).to_s(:db) %>
+  type: Match
+  qualify: 1
+  raking1: 24
+  raking2: 0
+  prev: raker_q3
+  next: raker_t1
+
+raker_m1:
+  player: raker
+  opponent: four
+  result1: 5
+  result2: 4
+  time: <%= (Time.now - 3.days).to_s(:db) %>
+  type: Match
+  qualify: 0
+  raking1: 4
+  raking2: 0
+  prev: raker_q4
+  next: raker_t1
+
+raker_t1:
+  player: raker
+  time: <%= (Time.now - 2.days).to_s(:db) %>
+  type: Tour
+  qualify: 0
+  raking1: 10
+  raking2: 0
+  prev: raker_m1

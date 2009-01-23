@@ -7,11 +7,6 @@ class Event < ActiveRecord::Base
   validates_presence_of :time
 
   after_create :assign_list_events
-
-  def raking(p = nil)
-    p == self.player ? raking1 : 0
-  end
-
 protected
   def assign_list_events
     Event.transaction do

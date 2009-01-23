@@ -15,3 +15,7 @@
   <%= f.label "total_raking" %>
   <%= f.text_field "total_raking" %>
 </p>
+<div id="tours">
+  <%= render :partial => "tournaments/tour", :collection => @tournament.tours %>
+</div>
+<%= add_tour_link %>

@@ -15,7 +15,17 @@ three:
   active: true
   raking: 18.99
 
+four:
+  name: Player4
+  active: true
+  raking: 16.99
+
 incative:
   name: Inactive
   active: false
+  raking: 0
+
+raker:
+  name: Raker
+  active: true
   raking: 0

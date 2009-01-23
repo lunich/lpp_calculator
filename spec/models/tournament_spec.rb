@@ -6,7 +6,8 @@ describe Tournament do
     @valid_attributes = {
       :name => "New tournament",
       :start => Time.now - 10.days,
-      :end => Time.now
+      :end => Time.now,
+      :total_raking => 100,
     }
   end
 
@@ -21,7 +22,7 @@ describe Tournament do
     end
 
     describe "should require" do
-      [:name, :start].each do |attr|
+      [:name, :start, :end, :total_raking].each do |attr|
         it "#{attr}" do
           t = Tournament.create(@valid_attributes.merge(attr => nil))
           t.errors.on(attr).should_not be_nil

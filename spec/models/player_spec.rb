@@ -97,19 +97,50 @@ describe Player do
     end
   end
 
-  describe "recalculate raking" do
+  describe "qualification_points" do
     fixtures :players, :events
-    it "should update players' rakings" do
-      players = Player.all_active
-      Player.recalculate_rakings
-      players.each do |player|
-        raking = 0
-        player.matches.each do |event|
-          raking += event.raking(player)
-        end
-        player.reload
-        player.raking.should == raking
+    it "should return current qualification" do
+      player = players(:raker)
+      raking = player.qualifies.find(:all, :order => "raking1")[0,3].inject(0) do |sum, q|
+        sum + q.raking1
       end
+      raking /= 3
+      player.qualification_points.should == raking
+    end
+    it "should return 0 qualification not finished" do
+      player = players(:raker)
+      player.qualification_points(Time.now-10.days).should == 0
+    end
+    it "should return 0 if was not qualified" do
+      player = players(:two)
+      player.qualification_points.should == 0
+    end
+  end
+
+  describe "non_qualify_events" do
+    fixtures :players, :events
+    it "should return all matches and tours" do
+      player = players(:raker)
+      nq = player.non_qualify_events
+      (player.tours + player.matches).each do |e|
+        nq.include?(e).should == true
+      end
+    end
+  end
+
+  describe "calculated_raking" do
+    fixtures :players, :events
+    it "should calculate current raking" do
+      player = players(:raker)
+      raking = player.qualification_points
+      raking += player.non_qualify_events.inject(0) { |sum, m| sum + m.raking1 }
+      player.calculated_raking.should == raking
+    end
+    it "should calculate history raking" do
+      player = players(:raker)
+      raking = player.qualification_points
+      raking += player.matches.inject(0) { |sum, m| sum + m.raking1 }
+      player.calculated_raking(Time.now - 2.5.days).should == raking
     end
   end
 

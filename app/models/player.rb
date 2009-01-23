@@ -12,32 +12,10 @@ class Player < ActiveRecord::Base
   before_create :reset_raking
 
   has_many :events, :order => "time"
-  has_many :matches
-  has_many :tours
-  has_many :qualifies, :class_name => "Match", :conditions => "qualify=1"
-
-  def self.recalculate_rakings
-    Player.transaction do
-      all_active.each do |player|
-        res = 0
-        if player.qualifies.size == 4
-          sum = []
-          player.qualifies.each do |q|
-            sum << q.raking(player)
-          end
-          sum.sort!
-          0.upto(2) do |i|
-            res += sum[i]
-          end
-          res /= 3
-        end
-        (player.matches + player.tours).each do |m|
-          res += m.raking(player)
-        end
-        player.update_attributes(:raking => res)
-      end
-    end
-  end
+  has_many :non_qualify_events, :class_name => "Event", :conditions => "qualify!=1", :order => "time"
+  has_many :matches, :order => "time", :conditions => "qualify!=1"
+  has_many :tours, :order => "time"
+  has_many :qualifies, :class_name => "Match", :conditions => "qualify=1", :order => "time"
 
   def self.all_active
     all(:conditions => ["active!=?", false], :order => "raking DESC")
@@ -51,6 +29,28 @@ class Player < ActiveRecord::Base
 
   def reset_raking
     self.raking = 0
+  end
+
+  def calculated_raking(from = Time.now)
+    e = self.non_qualify_events.find(:all, :conditions => ["time<=?",  from])
+    e.inject(0) { |sum, e| sum + e.raking1 } + qualification_points(from)
+  end
+
+  def self.top(from, c)
+    players = find(:all)
+    players.sort { |p1, p2| p1.calculated_raking(from) <=> p2.calculated_raking(from) }[0,c]
+  end
+
+  def qualification_points(from = Time.now)
+    if self.qualifies.count(:conditions => ["time<=?", from]) < 4
+      0
+    else
+      q = self.qualifies.find(:all, :conditions => ["time<=?", from], :order => "raking1")
+      total = q[0,3].inject(0) do |sum, q|
+        sum + q.raking1
+      end
+      total / 3
+    end
   end
 
 protected

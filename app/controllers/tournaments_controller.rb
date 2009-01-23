@@ -9,6 +9,10 @@ class TournamentsController < ApplicationController
 
   def new
     @tournament = Tournament.new
+    count = params[:count] || 16
+    count.to_i.times do |i|
+      @tournament.tours.build(:tournament_place => i + 1)
+    end
   end
 
   def create

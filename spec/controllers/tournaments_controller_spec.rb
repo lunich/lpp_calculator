@@ -70,7 +70,9 @@ describe TournamentsController do
 
   describe "new" do
     before(:each) do
-      @tournament = mock_model(Tournament)
+      din_array = mock(Tour)
+      din_array.stub!(:build => [])
+      @tournament = mock_model(Tournament, :tours => din_array)
       Tournament.stub!(:new).and_return(@tournament)
       get :new
     end
