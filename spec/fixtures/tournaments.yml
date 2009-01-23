@@ -7,6 +7,7 @@ one:
   total_raking: 100
   coeff: 1
   raking: 100
+  qualify: 1
 
 two:
   name: Tounament 2
@@ -15,3 +16,4 @@ two:
   total_raking: 100
   coeff: 0.8
   raking: 80
+  qualify: 0

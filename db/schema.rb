@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090119212816) do
+ActiveRecord::Schema.define(:version => 20090123162012) do
 
   create_table "events", :force => true do |t|
     t.integer  "player_id"
@@ -19,8 +19,7 @@ ActiveRecord::Schema.define(:version => 20090119212816) do
     t.datetime "time"
     t.string   "type"
     t.integer  "qualify"
-    t.decimal  "raking1",          :precision => 8, :scale => 4
-    t.decimal  "raking2",          :precision => 8, :scale => 4
+    t.decimal  "raking",           :precision => 8, :scale => 4
     t.integer  "prev_id"
     t.integer  "next_id"
     t.string   "comment"
@@ -45,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20090119212816) do
     t.decimal  "total_raking", :precision => 8, :scale => 4
     t.decimal  "coeff",        :precision => 8, :scale => 4
     t.decimal  "raking",       :precision => 8, :scale => 4
+    t.boolean  "qualify",                                    :default => false, :null => false
   end
 
 end

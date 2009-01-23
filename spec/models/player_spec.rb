@@ -55,7 +55,7 @@ describe Player do
 
   describe "all_active class method" do
     fixtures :players
-    it "should success" do
+    it "should success current active" do
       @players = Player.find(:all,
         :conditions => ["active!=?", false],
         :order => "raking DESC")
@@ -101,8 +101,8 @@ describe Player do
     fixtures :players, :events
     it "should return current qualification" do
       player = players(:raker)
-      raking = player.qualifies.find(:all, :order => "raking1")[0,3].inject(0) do |sum, q|
-        sum + q.raking1
+      raking = player.qualifies.find(:all, :order => "raking")[0,3].inject(0) do |sum, q|
+        sum + q.raking
       end
       raking /= 3
       player.qualification_points.should == raking
@@ -133,13 +133,13 @@ describe Player do
     it "should calculate current raking" do
       player = players(:raker)
       raking = player.qualification_points
-      raking += player.non_qualify_events.inject(0) { |sum, m| sum + m.raking1 }
+      raking += player.non_qualify_events.inject(0) { |sum, m| sum + m.raking }
       player.calculated_raking.should == raking
     end
     it "should calculate history raking" do
       player = players(:raker)
       raking = player.qualification_points
-      raking += player.matches.inject(0) { |sum, m| sum + m.raking1 }
+      raking += player.matches.inject(0) { |sum, m| sum + m.raking }
       player.calculated_raking(Time.now - 2.5.days).should == raking
     end
   end

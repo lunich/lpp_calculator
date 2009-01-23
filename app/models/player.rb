@@ -33,7 +33,7 @@ class Player < ActiveRecord::Base
 
   def calculated_raking(from = Time.now)
     e = self.non_qualify_events.find(:all, :conditions => ["time<=?",  from])
-    e.inject(0) { |sum, e| sum + e.raking1 } + qualification_points(from)
+    e.inject(0) { |sum, e| sum + e.raking } + qualification_points(from)
   end
 
   def self.top(from, c)
@@ -45,9 +45,9 @@ class Player < ActiveRecord::Base
     if self.qualifies.count(:conditions => ["time<=?", from]) < 4
       0
     else
-      q = self.qualifies.find(:all, :conditions => ["time<=?", from], :order => "raking1")
+      q = self.qualifies.find(:all, :conditions => ["time<=?", from], :order => "raking")
       total = q[0,3].inject(0) do |sum, q|
-        sum + q.raking1
+        sum + q.raking
       end
       total / 3
     end
