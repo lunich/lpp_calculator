@@ -38,7 +38,7 @@ CREATE TABLE `events` (
   `created_at` datetime default NULL,
   `updated_at` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=cp1251;
+) AUTO_INCREMENT=120 DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table events
@@ -178,7 +178,7 @@ CREATE TABLE `players` (
   `active` tinyint(1) NOT NULL default '0',
   `raking` decimal(8,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=cp1251;
+) AUTO_INCREMENT=49 DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table players
@@ -244,7 +244,7 @@ INSERT INTO `players` VALUES (48,'Lesha',0,0);
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL default '',
   UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+) DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table schema_migrations
@@ -279,7 +279,7 @@ CREATE TABLE `tournaments` (
   `raking` decimal(8,4) default NULL,
   `qualify` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=cp1251;
+) AUTO_INCREMENT=8 DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table tournaments
