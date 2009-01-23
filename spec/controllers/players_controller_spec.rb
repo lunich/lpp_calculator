@@ -22,7 +22,7 @@ describe PlayersController do
       @player1 = mock_model(Player)
       @player2 = mock_model(Player)
       @players = [@player1, @player2]
-      Player.stub!(:all => @players)
+      Player.stub!(:all_active => @players)
       Player.stub!(:recalculate_rakings => nil)
       get "index"
     end
@@ -31,7 +31,7 @@ describe PlayersController do
     end
 
     it "should assign players" do
-      Player.should_receive(:all).and_return(@players)
+      Player.should_receive(:all_active).and_return(@players)
     end
     it "should success" do
       response.should be_success

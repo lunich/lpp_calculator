@@ -16,14 +16,20 @@ class Player < ActiveRecord::Base
   has_many :matches, :order => "time", :conditions => "qualify!=1"
   has_many :tours, :order => "time"
   has_many :qualifies, :class_name => "Match", :conditions => "qualify=1", :order => "time"
+  has_many :tournaments, :through => :tours, :order => "time"
 
-  def self.all_active
-    all(:conditions => ["active!=?", false], :order => "raking DESC")
+  def self.all_active(from = Time.now)
+    players = find(:all)
+    players.reject { |p| !p.is_active?(from) }.sort{ |p1, p2| p2.calculated_raking(from) <=> p1.calculated_raking(from) }
   end
 
-  def calculated_place
-    all_players = Player.all_active
-    n = all_players.index(self)
+  def is_active?(from = Time.now)
+    (self.qualification_points(from) > 0) ||
+      (self.tournaments.count(:conditions => ["tournaments.qualify=1 AND time<=?", from]) > 0)
+  end
+
+  def calculated_place(from = Time.now)
+    n = Player.all_active(from).index(self)
     prev_equal_player(all_players, n) if n
   end
 
@@ -57,7 +63,7 @@ protected
   def prev_equal_player(players, n)
     if n == 0
       1
-    elsif (p = players[n-1]).raking == self.raking
+    elsif (p = players[n-1]).calculated_raking(from) == self.calculated_raking(from)
       p.prev_equal_player(players, n - 1)
     else
       n + 1

@@ -7,6 +7,17 @@ q_one_1:
   type: Match
   qualify: 1
   raking: 20
+  next: one_t1
+
+one_t1:
+  player: one
+  time: <%= (Time.now - 10.days).to_s(:db) %>
+  type: Tour
+  qualify: 0
+  raking: 10
+  tournament: one
+  prev: q_one_1
+  next: one_two
 
 one_two:
   player: one
@@ -17,7 +28,7 @@ one_two:
   type: Match
   qualify: 0
   raking: 9.99
-  prev: q_one_1
+  prev: one_t1
   next: two
 
 two_one:
@@ -118,4 +129,5 @@ raker_t1:
   type: Tour
   qualify: 0
   raking: 10
+  tournament: two
   prev: raker_m1
