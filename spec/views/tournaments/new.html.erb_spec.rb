@@ -5,7 +5,7 @@ describe "new" do
     @tournament = mock_model(Tournament, :name => "",
       :start => DateTime.now, :end => DateTime.now,
       :total_raking => "", :coeff => "", :raking => "",
-      :new_record? => true, :tours => []
+      :new_record? => true, :tours => [], :qualify => true
     )
     assigns[:tournament] = @tournament
     render "tournaments/new"

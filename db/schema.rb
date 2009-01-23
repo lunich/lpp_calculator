@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090123162012) do
+ActiveRecord::Schema.define(:version => 20090123222911) do
 
   create_table "events", :force => true do |t|
     t.integer  "player_id"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(:version => 20090123162012) do
     t.integer  "result2"
     t.datetime "time"
     t.string   "type"
-    t.integer  "qualify"
+    t.boolean  "qualify",                                        :default => false, :null => false
     t.decimal  "raking",           :precision => 8, :scale => 4
     t.integer  "prev_id"
     t.integer  "next_id"

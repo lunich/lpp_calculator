@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
 
   validates_presence_of :player_id
   validates_presence_of :time
+  validates_inclusion_of :qualify, :in => [true, false]
 
   after_create :assign_list_events
 protected

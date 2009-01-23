@@ -23,13 +23,8 @@ describe PlayersController do
       @player2 = mock_model(Player)
       @players = [@player1, @player2]
       Player.stub!(:all_active => @players)
-      Player.stub!(:recalculate_rakings => nil)
       get "index"
     end
-    it "should recalculate rakings" do
-      Player.should_receive(:recalculate_rakings)
-    end
-
     it "should assign players" do
       Player.should_receive(:all_active).and_return(@players)
     end

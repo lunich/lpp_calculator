@@ -9,14 +9,12 @@ describe Event do
     @valid_attributes = {
       :player_id => @player1.id,
       :time => Time.now,
+      :qualify => false,
     }
   end
 
   describe "create" do
-    [
-      :player_id,
-      :time,
-    ].each do |attr|
+    [:player_id, :time, :qualify].each do |attr|
       it "should require #{attr}" do
         @event = Event.create(@valid_attributes.merge(attr => nil))
         @event.errors.on(attr).should_not be_nil

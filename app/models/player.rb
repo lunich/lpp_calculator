@@ -25,12 +25,15 @@ class Player < ActiveRecord::Base
 
   def is_active?(from = Time.now)
     (self.qualification_points(from) > 0) ||
-      (self.tournaments.count(:conditions => ["tournaments.qualify=1 AND time<=?", from]) > 0)
+      (self.tournaments.count(:conditions => ["tournaments.qualify=1 AND time<?", from]) > 0)
   end
 
   def calculated_place(from = Time.now)
-    n = Player.all_active(from).index(self)
-    prev_equal_player(all_players, n) if n
+    active = Player.all_active(from)
+    active.reject do |p|
+      p.calculated_raking(from) < self.calculated_raking(from)
+    end.size + 1
+    #prev_equal_player(active, n, from) if n
   end
 
   def reset_raking
@@ -38,20 +41,22 @@ class Player < ActiveRecord::Base
   end
 
   def calculated_raking(from = Time.now)
-    e = self.non_qualify_events.find(:all, :conditions => ["time<=?",  from])
+    e = self.non_qualify_events.find(:all, :conditions => ["time<?",  from])
     e.inject(0) { |sum, e| sum + e.raking } + qualification_points(from)
   end
 
   def self.top(from, c)
-    players = find(:all)
-    players.sort { |p1, p2| p1.calculated_raking(from) <=> p2.calculated_raking(from) }[0,c]
+    players = all_active(from)
+    players.sort do |p1, p2|
+      p2.calculated_raking(from) <=> p1.calculated_raking(from)
+    end[0, c]
   end
 
   def qualification_points(from = Time.now)
-    if self.qualifies.count(:conditions => ["time<=?", from]) < 4
+    if self.qualifies.count(:conditions => ["time<?", from]) < 4
       0
     else
-      q = self.qualifies.find(:all, :conditions => ["time<=?", from], :order => "raking")
+      q = self.qualifies.find(:all, :conditions => ["time<?", from], :order => "raking")
       total = q[0,3].inject(0) do |sum, q|
         sum + q.raking
       end
@@ -60,11 +65,11 @@ class Player < ActiveRecord::Base
   end
 
 protected
-  def prev_equal_player(players, n)
+  def prev_equal_player(players, n, from)
     if n == 0
       1
     elsif (p = players[n-1]).calculated_raking(from) == self.calculated_raking(from)
-      p.prev_equal_player(players, n - 1)
+      p.prev_equal_player(players, n - 1, from)
     else
       n + 1
     end

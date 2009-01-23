@@ -25,4 +25,20 @@ class TournamentsController < ApplicationController
       render :action => "tournaments/new"
     end
   end
+
+  def edit
+    @tournament = Tournament.find(params[:id])
+  end
+
+  def update
+    @tournament = Tournament.find(params[:id])
+    if @tournament.update_attributes(params[:tournament])
+      flash[:notice] = "Tournament successfully updated"
+      redirect_to @tournament
+    else
+      flash[:error] = "Can't update tournament"
+      render :action => "tournaments/edit"
+    end
+  end
+
 end

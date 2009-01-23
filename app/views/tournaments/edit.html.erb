@@ -1,0 +1,7 @@
+<h1>Edit tournament</h1>
+<% form_for @tournament do |f| %>
+  <%= render :partial => "tournaments/form", :locals => { :f => f } %>
+  <p>
+    <%= f.submit("Update") %>
+  </p>
+<% end %>

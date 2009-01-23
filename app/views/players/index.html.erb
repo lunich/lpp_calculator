@@ -5,11 +5,11 @@
       <th>Name</th>
       <th>Raking</th>
     </tr>
-    <% @players.each do |p| %>
+    <% @players.each_with_index do |p, n| %>
       <tr id="player-<%= p.id %>">
-        <td><%= p.calculated_place %>.</td>
+        <td><%= n + 1 %>.</td>
         <td><%= p.name %></td>
-        <td><%= p.raking %></td>
+        <td><%= p.calculated_raking %></td>
       </tr>
     <% end %>
   </tbody>
