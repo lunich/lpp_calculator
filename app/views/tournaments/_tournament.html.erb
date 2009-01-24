@@ -8,7 +8,7 @@
     <% @tournament.tours.each do |t| %>
       <tr id="tour-<%= t.id %>">
         <td><%= t.tournament_place %>.</td>
-        <td><%= t.player.name unless t.player.nil? %></td>
+        <td><%= link_to(t.player.name, t.player) unless t.player.nil? %></td>
         <td><%= t.raking %></td>
       </tr>
     <% end %>

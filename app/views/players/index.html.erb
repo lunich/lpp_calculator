@@ -8,7 +8,7 @@
     <% @players.each_with_index do |p, n| %>
       <tr id="player-<%= p.id %>">
         <td><%= n + 1 %>.</td>
-        <td><%= p.name %></td>
+        <td><%= link_to p.name, p %></td>
         <td><%= p.calculated_raking %></td>
       </tr>
     <% end %>

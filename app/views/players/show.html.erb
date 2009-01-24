@@ -1,0 +1,11 @@
+<h1><%=  @player.name %></h1>
+<% @player.events.each do |e| %>
+  <p>
+    Date: <%= e.time %><br>
+    <% if e.instance_of?(Tour) %>
+      Tournament: <%= link_to e.tournament.name, e.tournament %><br>
+      Place: <%= e.tournament_place %> of <%= e.tournament.players.count %><br>
+    <% else %>
+    <% end %>
+  </p>
+<% end %>
