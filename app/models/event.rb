@@ -11,10 +11,18 @@ class Event < ActiveRecord::Base
 protected
   def assign_list_events
     Event.transaction do
-      l = self.player.events.last(:conditions => ["id!=?", self.id])
+      l = self.player.events.last(:conditions => ["id!=? AND time<?", self.id, self.time])
       unless l.nil?
         self.prev = l
-        l.update_attributes(:next_id => self.id)
+        self.next = self.prev.next
+        self.prev.update_attributes(:next_id => self.id)
+        self.next.update_attributes(:prev_id => self.id) unless self.next.nil?
+      else
+        l = self.player.events.first
+        unless l.nil?
+          self.next = l
+          self.next.update_attributes(:prev_id => self.id)
+        end
       end
     end
   end
