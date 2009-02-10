@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event1: game1_2
+  event2: game2_1
+  result1: 5
+  result2: 4
+  qualification: false
+  time: 2009-01-25 14:18:58

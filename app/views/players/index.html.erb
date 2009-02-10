@@ -9,7 +9,7 @@
       <tr id="player-<%= p.id %>">
         <td><%= n + 1 %>.</td>
         <td><%= link_to p.name, p %></td>
-        <td><%= p.calculated_raking %></td>
+        <td align="right"><%= "%.4f" % p.calculated_raking %></td>
       </tr>
     <% end %>
   </tbody>

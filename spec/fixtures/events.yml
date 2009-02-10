@@ -131,3 +131,23 @@ raker_t1:
   raking: 10
   tournament: two
   prev: raker_m1
+
+game1_2:
+  player: one
+  opponent: two
+  result1: 5
+  result2: 4
+  time: <%= (Time.now - 2.days).to_s(:db) %>
+  type: Match
+  qualify: 0
+  raking: 4
+
+game2_1:
+  player: two
+  opponent: one
+  result1: 4
+  result2: 5
+  time: <%= (Time.now - 2.days).to_s(:db) %>
+  type: Match
+  qualify: 0
+  raking: -4
