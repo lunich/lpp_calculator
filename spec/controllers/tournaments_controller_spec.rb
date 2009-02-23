@@ -118,7 +118,7 @@ describe TournamentsController do
     end
     it "should call new and save" do
       post "create", @valid_attributes
-      Tournament.should_receive(:new).with(@valid_attributes).and_return(@tournament)
+      Tournament.should_receive(:new).with(@valid_attributes[:tournament]).and_return(@tournament)
     end
   end
 end

@@ -12,12 +12,13 @@ class Player < ActiveRecord::Base
 
   before_create :reset_raking
 
+  has_many :tournament_participations
+  has_many :tournaments, :through => :tournament_participations, :order => "time"
   has_many :events, :order => "time"
   has_many :non_qualify_events, :class_name => "Event", :order => "time"
   has_many :matches, :order => "time"
   has_many :tours, :order => "time"
   has_many :qualifies, :class_name => "Match", :order => "time"
-  has_many :tournaments, :through => :tours, :order => "time"
 
   def self.all_active(from = Time.now)
     players = find(:all)

@@ -9,7 +9,6 @@ one_t1:
   time: <%= (Time.now - 10.days).to_s(:db) %>
   type: Tour
   raking: 10
-  tournament: one
 
 one_two:
   player: one
@@ -70,7 +69,6 @@ raker_t1:
   time: <%= (Time.now - 2.days).to_s(:db) %>
   type: Tour
   raking: 10
-  tournament: two
 
 game1_2:
   player: one

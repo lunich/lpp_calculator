@@ -70,42 +70,6 @@ describe Player do
     end
   end
 
-  describe "calculated_place method"
-=begin
-do
-    fixtures :players
-    before do
-      @players = Player.all_active
-      @first = @players.first
-      @last = @players.last
-      @new_player = Player.create(@valid_attributes)
-    end
-    it "should be 1" do
-      @new_player.update_attributes(:raking => @first.raking + 1)
-      @new_player.calculated_place.should == 1
-    end
-    it "should be last" do
-      @new_player.update_attributes(:raking => @last.raking - 1)
-      @new_player.calculated_place.should == @players.size + 1
-    end
-    it "should be equal to first" do
-      @new_player.update_attributes(:raking => @first.raking)
-      @new_player.calculated_place.should == @first.calculated_place
-    end
-    it "should be equal to last" do
-      @new_player.update_attributes(:raking => @last.raking)
-      @new_player.calculated_place.should == @last.calculated_place
-    end
-    it "should be average" do
-      @new_player.update_attributes(:raking => (@first.raking + @last.raking) / 2)
-      @new_player.calculated_place.should > @first.calculated_place
-      @new_player.calculated_place.should < @last.calculated_place
-    end
-    it "should be nil" do
-      players(:incative).calculated_place.should be_nil
-    end
-  end
-=end
   describe "qualification_points" do
     fixtures :players, :events
     it "should return current qualification" do

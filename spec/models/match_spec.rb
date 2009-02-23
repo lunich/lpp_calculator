@@ -21,7 +21,7 @@ describe Match do
     it "should create a new instance given valid attributes" do
       check_created_event(@event)
     end
-    it "should increase plyers' matches size" do
+    it "should increase players' matches size" do
       @player1.matches.count.should == @count + 1
     end
   end

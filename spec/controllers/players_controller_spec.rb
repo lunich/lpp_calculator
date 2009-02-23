@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe PlayersController do
-
   it "should use PlayersController" do
     controller.should be_an_instance_of(PlayersController)
   end
@@ -25,14 +24,14 @@ describe PlayersController do
       Player.stub!(:all_active => @players)
       get "index"
     end
-    it "should assign players" do
-      Player.should_receive(:all_active).and_return(@players)
-    end
     it "should success" do
       response.should be_success
     end
     it "should render valid template" do
       response.should render_template("players/index")
+    end
+    it "should assign players" do
+      Player.should_receive(:all_active).and_return(@players)
     end
   end
 end

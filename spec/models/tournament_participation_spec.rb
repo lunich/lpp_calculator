@@ -31,6 +31,20 @@ describe TournamentParticipation do
     end
   end
 
+  describe "create with tour" do
+    it "should build new tour" do
+      lambda do
+        TournamentParticipation.create(@valid_attributes)
+      end.should change(Tour, :count).by(1)
+    end
+    it "should setup tour" do
+      td = TournamentParticipation.create(@valid_attributes)
+      td.tour.should_not be_nil
+      td.tour.tournament_participation.should == td
+      td.tour.tournament.should == td.tournament
+    end
+  end
+
   describe "create should require" do
     [ :player_id,
       #:tournament_id,
@@ -69,4 +83,5 @@ describe TournamentParticipation do
       @tp.errors.on(:tournament_id).should_not be_nil
     end
   end
+
 end

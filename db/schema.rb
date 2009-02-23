@@ -37,6 +37,13 @@ ActiveRecord::Schema.define(:version => 20090223140513) do
     t.string  "full_name"
   end
 
+  create_table "tournament_participations", :force => true do |t|
+    t.integer  "tournament_id"
+    t.integer  "player_id"
+    t.datetime "time"
+    t.integer  "place"
+  end
+
   create_table "tournaments", :force => true do |t|
     t.string   "name"
     t.datetime "start"
@@ -47,13 +54,6 @@ ActiveRecord::Schema.define(:version => 20090223140513) do
     t.decimal  "coeff",        :precision => 8, :scale => 4
     t.decimal  "raking",       :precision => 8, :scale => 4
     t.boolean  "qualify",                                    :default => false, :null => false
-  end
-
-  create_table "tournament_participations", :force => true do |t|
-    t.integer  "tournament_id"
-    t.integer  "player_id"
-    t.datetime "time"
-    t.integer  "place"
   end
 
 end
