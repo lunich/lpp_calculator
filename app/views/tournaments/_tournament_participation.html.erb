@@ -1,7 +1,7 @@
 <div class="tournament_participation">
-  <% fields_for "tournament[#{item_prefix(tour)}_tournament_participations_data][]", tour do |t| %>
+  <% fields_for "tournament[#{item_prefix(tournament_participation)}_tournament_participations_data][]", tournament_participation do |t| %>
     <p>
-      <%= tour.errors.map { |e, m| "#{e}: #{m}" }.join("<br>") %>
+      <%= tournament_participation.errors.map { |e, m| "#{e}: #{m}" }.join("<br>") %>
       <%= t.text_field "place", :size => 2, :maxlength => 3 %>
       <%= t.select "player_id", players_for_select %>
       <%= button_to_function "delete", "$(this).up('.tournament_participation').remove()" %>

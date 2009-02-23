@@ -5,7 +5,7 @@
     Date: <%= e.time %><br>
     <% if e.instance_of?(Tour) %>
       Tournament: <%= link_to e.tournament.name, e.tournament %><br>
-      Place: <%= e.tournament_place %> of <%= e.tournament.players.count %><br>
+      Place: <%= e.place %> of <%= e.tournament.players.count %><br>
     <% else %>
     <% end %>
     Points: <%= e.raking %><br>

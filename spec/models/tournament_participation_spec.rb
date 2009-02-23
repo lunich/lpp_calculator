@@ -9,7 +9,8 @@ describe TournamentParticipation do
       :tournament_id => @tournament.id,
       :player_id => @player.id,
       :time => Time.now,
-      :place => 3
+      :place => 3,
+      :raking => 12
     }
   end
 
@@ -31,19 +32,22 @@ describe TournamentParticipation do
   end
 
   describe "create should require" do
-    [:player_id, :tournament_id, :place].each do |attr|
+    [ :player_id,
+      #:tournament_id,
+      :place,
+      :raking].each do |attr|
       it "#{attr}" do
         @tp = TournamentParticipation.create(@valid_attributes.merge(attr => nil))
-        @tr.valid?.should == false
-        @tr.errors.on(attr).should_not be_nil
+        @tp.valid?.should == false
+        @tp.errors.on(attr).should_not be_nil
       end
     end
     describe "valid place" do
-      ["A", "-1"].each do |invalid|
+      ["A", -1, 0, 2.122].each do |invalid|
         it "#{invalid}" do
           @tp = TournamentParticipation.create(@valid_attributes.merge(:place => invalid))
-          @tr.valid?.should == false
-          @tr.errors.on(:place).should_not be_nil
+          @tp.valid?.should == false
+          @tp.errors.on(:place).should_not be_nil
         end
       end
     end
@@ -60,9 +64,9 @@ describe TournamentParticipation do
         :tournament_id => @old_part.tournament_id,
         :place => @old_part.place + 100
       )
-      @tr.valid?.should == false
-      @tr.errors.on(:player_id).should_not be_nil
-      @tr.errors.on(:tournament_id).should_not be_nil
+      @tp.valid?.should == false
+      @tp.errors.on(:player_id).should_not be_nil
+      @tp.errors.on(:tournament_id).should_not be_nil
     end
   end
 end

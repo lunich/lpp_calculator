@@ -29,20 +29,16 @@ describe Tournament do
       lambda do
         t = Tournament.create(@valid_attributes)
         t.tournament_participations.count.should == 2
-      end.should change(Tour, :count).by(2)
+        t.tournament_participations.each do |tp|
+          tp.tournament.should == t
+        end
+      end.should change(TournamentParticipation, :count).by(2)
     end
 
     it "should set tournament_participations time" do
       t = Tournament.create(@valid_attributes)
       t.tournament_participations.each do |tr|
         tr.time.should == t.end
-      end
-    end
-
-    it "should set tournament_participations qualify to false" do
-      t = Tournament.create(@valid_attributes)
-      t.tournament_participations.each do |tr|
-        tr.qualify.should == false
       end
     end
 

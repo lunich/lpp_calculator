@@ -4,14 +4,14 @@ class TournamentsController < ApplicationController
   end
 
   def show
-    @tournament = Tournament.find(params[:id], :include => { :tours => :player })
+    @tournament = Tournament.find(params[:id], :include => { :tournament_participations => :player })
   end
 
   def new
     @tournament = Tournament.new
     count = params[:count] || 16
     count.to_i.times do |i|
-      @tournament.tours.build(:tournament_place => i + 1)
+      @tournament.tournament_participations.build(:place => i + 1)
     end
   end
 

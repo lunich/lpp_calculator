@@ -18,7 +18,7 @@ class Tournament < ActiveRecord::Base
 
   before_validation :calculate_raking
   before_validation :set_time
-  before_save :set_tour_rakings
+  before_validation :set_tour_rakings
 
   after_update :save_tournament_participations
 
@@ -30,7 +30,7 @@ class Tournament < ActiveRecord::Base
     @new_tournament_participation_data = data
     unless @new_tournament_participation_data.nil?
       @new_tournament_participation_data.each do |attr|
-        self.tournament_participations << TournamentParticipation.new(attr)
+        self.tournament_participations.build(attr)
       end
     end
   end
@@ -75,16 +75,18 @@ protected
   end
 
   def set_tour_rakings
-    groups = {}
-    self.tournament_participations.each do |t|
-      groups.has_key?(t.place) ?
-        groups[t.place] << t :
-        groups[t.place] = [t]
-    end
-    total = groups.keys.inject(0) { |sum, k| sum + groups[k].size * Coeff::INPUT_COEFF[k] }
-    x = total_raking / total
-    self.tournament_participations.each do |t|
-      t.raking = x * Coeff::INPUT_COEFF[t.place]
+    unless total_raking.blank?
+      groups = {}
+      self.tournament_participations.each do |t|
+        groups.has_key?(t.place) ?
+          groups[t.place] << t :
+          groups[t.place] = [t]
+      end
+      total = groups.keys.inject(0) { |sum, k| sum + groups[k].size * Coeff::INPUT_COEFF[k] }
+      x = total_raking / total
+      self.tournament_participations.each do |t|
+        t.raking = x * Coeff::INPUT_COEFF[t.place]
+      end
     end
   end
 

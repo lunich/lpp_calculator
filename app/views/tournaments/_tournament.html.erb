@@ -5,9 +5,9 @@
       <th>Player</th>
       <th>Points</th>
     </tr>
-    <% @tournament.tours.each do |t| %>
+    <% @tournament.tournament_participations.each do |t| %>
       <tr id="tour-<%= t.id %>">
-        <td><%= t.tournament_place %>.</td>
+        <td><%= t.place %>.</td>
         <td><%= link_to(t.player.name, t.player) unless t.player.nil? %></td>
         <td><%= t.raking %></td>
       </tr>

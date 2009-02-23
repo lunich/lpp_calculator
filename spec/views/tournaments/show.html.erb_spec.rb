@@ -24,7 +24,7 @@ describe "show" do
       end
       @tournament.tournament_participations.each do |t|
         with_tag("tr#tour-#{t.id}") do
-          with_tag("td", "#{t.tournament_place}.")
+          with_tag("td", "#{t.place}.")
           with_tag("td", "#{t.player.name}")
           with_tag("td", "#{t.raking}")
         end
