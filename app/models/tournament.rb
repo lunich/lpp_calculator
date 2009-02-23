@@ -5,45 +5,45 @@ class Tournament < ActiveRecord::Base
   validates_presence_of :total_raking
   validates_presence_of :coeff
   validates_presence_of :raking
-  validates_presence_of :new_tour_data, :on => :create
+  validates_presence_of :new_tournament_participation_data, :on => :create
 
   validates_numericality_of :total_raking, :coeff, :raking
 
-  validates_associated :tours
+  validates_associated :tournament_participations
 
-  validates_size_of :tours, :minimum => 2
+  validates_size_of :tournament_participations, :minimum => 2
 
-  has_many :tours, :order => "tournament_place"
-  has_many :players, :through => :tours
+  has_many :tournament_participations, :order => "place"
+  has_many :players, :through => :tournament_participations
 
   before_validation :calculate_raking
   before_validation :set_time
   before_save :set_tour_rakings
 
-  after_update :save_tours
+  after_update :save_tournament_participations
 
-  def new_tour_data
-    @new_tour_data
+  def new_tournament_participation_data
+    @new_tournament_participation_data
   end
 
-  def new_tour_data=(data)
-    @new_tour_data = data
-    unless @new_tour_data.nil?
-      @new_tour_data.each do |attr|
-        self.tours << Tour.new(attr)
+  def new_tournament_participation_data=(data)
+    @new_tournament_participation_data = data
+    unless @new_tournament_participation_data.nil?
+      @new_tournament_participation_data.each do |attr|
+        self.tournament_participations << TournamentParticipation.new(attr)
       end
     end
   end
 
-  def existing_tour_data=(data)
-    @existing_tour_data = data
-    unless @existing_tour_data.nil?
-      tours.reject(&:new_record?).each do |tour|
-        attributes = @existing_tour_data[tour.id.to_s]
+  def existing_tournament_participation_data=(data)
+    @existing_tournament_participation_data = data
+    unless @existing_tournament_participation_data.nil?
+      tournament_participations.reject(&:new_record?).each do |tour|
+        attributes = @existing_tournament_participation_data[tour.id.to_s]
         if attributes
           tour.attributes = attributes
         else
-          tours.delete(tour)
+          tournament_participations.delete(tour)
         end
       end
     end
@@ -55,15 +55,14 @@ class Tournament < ActiveRecord::Base
 
 protected
   def set_time
-    self.tours.each do |t|
-      t.qualify = false
+    self.tournament_participations.each do |t|
       t.time = self.end
     end
   end
 
   def calculate_raking
     unless total_raking.blank?
-      top = Player.top(self.start, self.tours.size)
+      top = Player.top(self.start, self.tournament_participations.size)
       total_top = top.inject(0) { |sum, p| sum + p.calculated_raking(self.start) }
       if total_top == 0
         self.coeff = 1
@@ -77,20 +76,20 @@ protected
 
   def set_tour_rakings
     groups = {}
-    self.tours.each do |t|
-      groups.has_key?(t.tournament_place) ?
-        groups[t.tournament_place] << t :
-        groups[t.tournament_place] = [t]
+    self.tournament_participations.each do |t|
+      groups.has_key?(t.place) ?
+        groups[t.place] << t :
+        groups[t.place] = [t]
     end
     total = groups.keys.inject(0) { |sum, k| sum + groups[k].size * Coeff::INPUT_COEFF[k] }
     x = total_raking / total
-    self.tours.each do |t|
-      t.raking = x * Coeff::INPUT_COEFF[t.tournament_place]
+    self.tournament_participations.each do |t|
+      t.raking = x * Coeff::INPUT_COEFF[t.place]
     end
   end
 
-  def save_tours
-    tours.each do |tour|
+  def save_tournament_participations
+    tournament_participations.each do |tour|
       tour.save(false)
     end
   end

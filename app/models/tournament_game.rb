@@ -1,0 +1,2 @@
+class TournamentGame < Game
+end

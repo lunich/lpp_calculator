@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Game do
+describe Game, :shared => true do
   fixtures :players
   before(:each) do
     @player1 = players(:one)
@@ -21,7 +21,17 @@ describe Game do
         game.valid?.should == true
       end.should change(Game, :count).by(1)
     end
-    it "should create 2 events" do
+    it "should build players associations" do
+      game = Game.create(@valid_attributes)
+      game.player1.should == @player1
+      game.player2.should == @player2
+    end
+    it "should build matches associations" do
+      game = Game.create(@valid_attributes)
+      game.match1.should_not be_nil
+      game.match2.should_not be_nil
+    end
+    it "should add 2 events" do
       lambda do
         game = Game.create(@valid_attributes)
       end.should change(Event, :count).by(2)
@@ -35,6 +45,17 @@ describe Game do
           end.should_not change(Game, :count)
         end
       end
+    end
+  end
+
+  describe "destroy" do
+    before(:each) do
+      @game = Game.create(@valid_attributes)
+    end
+    it "should remove 2 events" do
+      lambda do
+        @game.destroy
+      end.should change(Event, :count).by(-2)
     end
   end
 

@@ -10,9 +10,9 @@ describe Tournament do
         :start => Time.now - 10.days,
         :end => Time.now,
         :total_raking => 100,
-        :new_tour_data => [
-          { :player_id => players(:one).id, :tournament_place => 1 },
-          { :player_id => players(:two).id, :tournament_place => 2 },
+        :new_tournament_participation_data => [
+          { :player_id => players(:one).id, :place => 1 },
+          { :player_id => players(:two).id, :place => 2 },
         ]
       }
     end
@@ -25,41 +25,41 @@ describe Tournament do
       end.should change(Tournament, :count).by(1)
     end
 
-    it "should create 2 tours" do
+    it "should create 2 tournament_participations" do
       lambda do
         t = Tournament.create(@valid_attributes)
-        t.tours.count.should == 2
+        t.tournament_participations.count.should == 2
       end.should change(Tour, :count).by(2)
     end
 
-    it "should set tours time" do
+    it "should set tournament_participations time" do
       t = Tournament.create(@valid_attributes)
-      t.tours.each do |tr|
+      t.tournament_participations.each do |tr|
         tr.time.should == t.end
       end
     end
 
-    it "should set tours qualify to false" do
+    it "should set tournament_participations qualify to false" do
       t = Tournament.create(@valid_attributes)
-      t.tours.each do |tr|
+      t.tournament_participations.each do |tr|
         tr.qualify.should == false
       end
     end
 
     describe "should require" do
-      [:name, :start, :end, :total_raking, :new_tour_data].each do |attr|
+      [:name, :start, :end, :total_raking, :new_tournament_participation_data].each do |attr|
         it "#{attr}" do
           t = Tournament.create(@valid_attributes.merge(attr => nil))
           t.errors.on(attr).should_not be_nil
           t.valid?.should == false
         end
       end
-      it "minimum 2 tours" do
+      it "minimum 2 tournament_participations" do
         t = Tournament.create(@valid_attributes.merge(
-          :new_tour_data => [
-            { :player_id => players(:one).id, :tournament_place => 1 },
+          :new_tournament_participation_data => [
+            { :player_id => players(:one).id, :place => 1 },
           ]))
-        t.errors.on(:tours).should_not be_nil
+        t.errors.on(:tournament_participations).should_not be_nil
       end
     end
   end
@@ -90,8 +90,8 @@ describe Tournament do
     before(:each) do
       @tournament = tournaments(:one)
     end
-    it "tours" do
-      @tournament.tours.should_not be_nil
+    it "tournament_participations" do
+      @tournament.tournament_participations.should_not be_nil
     end
     it "players" do
       @tournament.players.should_not be_nil

@@ -1,13 +1,13 @@
 class Game < ActiveRecord::Base
-  belongs_to :event1, :class_name => "Match", :dependent => :destroy
-  belongs_to :event2, :class_name => "Match", :dependent => :destroy
-  has_one :player1, :through => :event1,
-    :class_name => "User", :foreign_key => :player_id
-  has_one :player1, :through => :event2,
-    :class_name => "User", :foreign_key => :player_id
+  belongs_to :player1, :class_name => "Player"
+  belongs_to :player2, :class_name => "Player"
 
-  attr_accessor :player1_id
-  attr_accessor :player2_id
+  has_one :match1, :class_name => "Match", :foreign_key => "parent_id",
+    :conditions => ["events.player_id=games.player1_id"],
+    :dependent => :destroy
+  has_one :match2, :class_name => "Match", :foreign_key => "parent_id",
+    :conditions => ["events.player_id=games.player1_id"],
+    :dependent => :destroy
 
   validates_presence_of :result1
   validates_presence_of :result2
@@ -15,24 +15,19 @@ class Game < ActiveRecord::Base
   validates_presence_of :player2_id
   validates_presence_of :time
 
-  validates_associated :event1, :event2
+  validates_associated :match1, :match2
 
-  before_validation_on_create :build_events
+  before_validation_on_create :build_matches
 
-  def build_events
-    self.event1 = Match.new(
+  def build_matches
+    self.match1 = Match.new(
       :player_id => self.player1_id,
-      :opponent_id => self.player2_id,
-      :result1 => self.result1,
-      :result2 => self.result2,
       :time => self.time
     )
-    self.event2 = Match.new(
+    self.match2 = Match.new(
       :player_id => self.player2_id,
-      :opponent_id => self.player1_id,
-      :result1 => self.result2,
-      :result2 => self.result1,
       :time => self.time
     )
+    true
   end
 end

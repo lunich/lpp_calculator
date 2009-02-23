@@ -13,18 +13,25 @@ describe "index" do
     render "players/index"
   end
 
-  it "should render players table" do
+  it "should render players table and header" do
     response.should have_tag("table#players") do
       with_tag("tr#header") do
         with_tag("th", "#")
         with_tag("th", "Name")
         with_tag("th", "Raking")
       end
+    end
+  end
+
+  it "should have all players" do
+    response.should have_tag("table#players") do
       @players.each do |p|
         with_tag("tr#player-#{p.id}") do
           with_tag("td", "#{p.calculated_place}.")
-          with_tag("td", p.name)
-          with_tag("td", "#{p.calculated_raking}")
+          with_tag("td") do
+            with_tag("a", { :text => p.name, :href => player_path(p) })
+          end
+          with_tag("td", "%.4f" % p.calculated_raking)
         end
       end
     end

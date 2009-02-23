@@ -1,16 +1,14 @@
 <table id="players">
-  <tbody>
-    <tr id="header">
-      <th>#</th>
-      <th>Name</th>
-      <th>Raking</th>
+  <tr id="header">
+    <th>#</th>
+    <th>Name</th>
+    <th>Raking</th>
+  </tr>
+  <% @players.each_with_index do |p, n| %>
+    <tr id="player-<%= p.id %>">
+      <td><%= n + 1 %>.</td>
+      <td><%= link_to p.name, p %></td>
+      <td align="right"><%= "%.4f" % p.calculated_raking %></td>
     </tr>
-    <% @players.each_with_index do |p, n| %>
-      <tr id="player-<%= p.id %>">
-        <td><%= n + 1 %>.</td>
-        <td><%= link_to p.name, p %></td>
-        <td align="right"><%= "%.4f" % p.calculated_raking %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% end %>
 </table>

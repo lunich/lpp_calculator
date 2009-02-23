@@ -4,12 +4,12 @@ describe "show" do
   before(:each) do
     @p1 = mock_model(Player, :name => "P1")
     @p2 = mock_model(Player, :name => "P2")
-    @t1 = mock_model(Tour, :player => @p1, :tournament_place => 1, :raking => 10)
-    @t2 = mock_model(Tour, :player => @p2, :tournament_place => 2, :raking => 9)
+    @t1 = mock_model(TournamentParticipation, :player => @p1, :place => 1, :raking => 10)
+    @t2 = mock_model(TournamentParticipation, :player => @p2, :place => 2, :raking => 9)
     @tournament = mock_model(Tournament, :name => "LPP1",
       :start => DateTime.now - 12.days, :end => DateTime.now - 10.days,
       :total_raking => 100, :coeff => 1, :raking => 100,
-      :tours => [@t1, @t2]
+      :tournament_participations => [@t1, @t2]
     )
     assigns[:tournament] = @tournament
     render "tournaments/show"
@@ -22,7 +22,7 @@ describe "show" do
         with_tag("th", "Player")
         with_tag("th", "Points")
       end
-      @tournament.tours.each do |t|
+      @tournament.tournament_participations.each do |t|
         with_tag("tr#tour-#{t.id}") do
           with_tag("td", "#{t.tournament_place}.")
           with_tag("td", "#{t.player.name}")

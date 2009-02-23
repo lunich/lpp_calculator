@@ -1,153 +1,85 @@
 q_one_1:
   player: one
-  opponent: two
-  result1: 5
-  result2: 4
   time: <%= (Time.now - 10.days).to_s(:db) %>
   type: Match
-  qualify: 1
   raking: 20
-  next: one_t1
 
 one_t1:
   player: one
   time: <%= (Time.now - 10.days).to_s(:db) %>
   type: Tour
-  qualify: 0
   raking: 10
   tournament: one
-  prev: q_one_1
-  next: one_two
 
 one_two:
   player: one
-  opponent: two
-  result1: 5
-  result2: 4
   time: <%= (Time.now - 9.days).to_s(:db) %>
   type: Match
-  qualify: 0
   raking: 9.99
-  prev: one_t1
-  next: two
 
 two_one:
   player: two
-  opponent: one
-  result1: 4
-  result2: 5
   time: <%= (Time.now - 9.days).to_s(:db) %>
   type: Match
-  qualify: 0
   raking: -9.99
 
 two:
   player: one
-  opponent: two
-  result1: 4
-  result2: 5
   time: <%= (Time.now - 8.days).to_s(:db) %>
   type: Match
-  qualify: 0
   raking: -9.99
-  prev: one
-  next: three
 
 three:
   player: one
-  opponent: three
-  result1: 8
-  result2: 1
   time: <%= (Time.now - 7.days).to_s(:db) %>
   type: Match
-  qualify: 0
   raking: 22
-  prev: two
 
 raker_q1:
   player: raker
-  opponent: one
-  result1: 1
-  result2: 8
   time: <%= (Time.now - 7.days).to_s(:db) %>
   type: Match
-  qualify: 1
   raking: 21
-  next: raker_q2
 
 raker_q2:
   player: raker
-  opponent: two
-  result1: 2
-  result2: 7
   time: <%= (Time.now - 6.days).to_s(:db) %>
   type: Match
-  qualify: 1
   raking: 22
-  prev: raker_q1
-  next: raker_q3
 
 raker_q3:
   player: raker
-  opponent: three
-  result1: 3
-  result2: 6
   time: <%= (Time.now - 5.days).to_s(:db) %>
   type: Match
-  qualify: 1
   raking: 23
-  prev: raker_q2
-  next: raker_q4
 
 raker_q4:
   player: raker
-  opponent: four
-  result1: 4
-  result2: 5
   time: <%= (Time.now - 4.days).to_s(:db) %>
   type: Match
-  qualify: 1
   raking: 24
-  prev: raker_q3
-  next: raker_t1
 
 raker_m1:
   player: raker
-  opponent: four
-  result1: 5
-  result2: 4
   time: <%= (Time.now - 3.days).to_s(:db) %>
   type: Match
-  qualify: 0
   raking: 4
-  prev: raker_q4
-  next: raker_t1
 
 raker_t1:
   player: raker
   time: <%= (Time.now - 2.days).to_s(:db) %>
   type: Tour
-  qualify: 0
   raking: 10
   tournament: two
-  prev: raker_m1
 
 game1_2:
   player: one
-  opponent: two
-  result1: 5
-  result2: 4
   time: <%= (Time.now - 2.days).to_s(:db) %>
   type: Match
-  qualify: 0
   raking: 4
 
 game2_1:
   player: two
-  opponent: one
-  result1: 4
-  result2: 5
   time: <%= (Time.now - 2.days).to_s(:db) %>
   type: Match
-  qualify: 0
   raking: -4

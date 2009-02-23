@@ -1,6 +1,7 @@
 class Player < ActiveRecord::Base
   validates_presence_of :name
   validates_length_of :name, :within => 2..20
+  validates_length_of :full_name, :maximum => 100
   validates_uniqueness_of :name
 
   validates_inclusion_of :active, :in => [true, false]
@@ -12,10 +13,10 @@ class Player < ActiveRecord::Base
   before_create :reset_raking
 
   has_many :events, :order => "time"
-  has_many :non_qualify_events, :class_name => "Event", :conditions => "qualify!=1", :order => "time"
-  has_many :matches, :order => "time", :conditions => "qualify!=1"
+  has_many :non_qualify_events, :class_name => "Event", :order => "time"
+  has_many :matches, :order => "time"
   has_many :tours, :order => "time"
-  has_many :qualifies, :class_name => "Match", :conditions => "qualify=1", :order => "time"
+  has_many :qualifies, :class_name => "Match", :order => "time"
   has_many :tournaments, :through => :tours, :order => "time"
 
   def self.all_active(from = Time.now)

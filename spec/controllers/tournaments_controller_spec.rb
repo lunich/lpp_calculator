@@ -47,10 +47,10 @@ describe TournamentsController do
     before(:each) do
       p1 = mock_model(Player, :name => "Player1")
       p2 = mock_model(Player, :name => "Player2")
-      t1 = mock_model(Tour, :player => p1, :place => 1)
-      t2 = mock_model(Tour, :player => p2, :place => 2)
-      @tours = [t1, t2]
-      @tournament = mock_model(Tournament, :tours => @tours)
+      t1 = mock_model(TournamentParticipation, :player => p1, :place => 1)
+      t2 = mock_model(TournamentParticipation, :player => p2, :place => 2)
+      @tournament_participations = [t1, t2]
+      @tournament = mock_model(Tournament, :tournament_participations => @tournament_participations)
       Tournament.stub!(:find).and_return(@tournament)
       get "show", :id => @tournament.id
     end
@@ -72,7 +72,7 @@ describe TournamentsController do
     before(:each) do
       din_array = mock(Tour)
       din_array.stub!(:build => [])
-      @tournament = mock_model(Tournament, :tours => din_array)
+      @tournament = mock_model(Tournament, :tournament_participations => din_array)
       Tournament.stub!(:new).and_return(@tournament)
       get :new
     end

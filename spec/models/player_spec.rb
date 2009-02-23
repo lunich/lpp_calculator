@@ -4,6 +4,7 @@ describe Player do
   before(:each) do
     @valid_attributes = {
       :name => "New Player",
+      :full_name => "John Sapkovsky",
       :active => true,
       :raking => 9.99
     }
@@ -19,6 +20,7 @@ describe Player do
   describe "field" do
     [
       [:name, ["A" * 20], [nil, "", "A" * 21, "1"]],
+      [:full_name, ["A" * 100], ["A" * 101]],
       [:active, [true, false], [nil, ""]],
       [:raking, ["123", 12, 9999], [nil, "", -1, 10000]],
     ].each do |attr, valids, invalids|

@@ -1,0 +1,26 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+t1_p1:
+  tournament: one
+  player: one
+  time: 2008-02-23 16:05:13
+  place: 1
+
+t1_p2:
+  tournament: one
+  player: two
+  time: 2008-02-23 16:05:13
+  place: 2
+
+t2_p2:
+  tournament: two
+  player: two
+  time: 2009-02-23 16:05:13
+  place: 1
+
+t2_p1:
+  tournament: two
+  player: one
+  time: 2009-02-23 16:05:13
+  place: 1
+

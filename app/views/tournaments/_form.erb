@@ -19,7 +19,7 @@
   <%= f.label "qualify" %>
   <%= f.check_box "qualify" %>
 </p>
-<div id="tours">
-  <%= render :partial => "tournaments/tour", :collection => @tournament.tours %>
+<div id="tournament_participations">
+  <%= render :partial => "tournaments/tournament_participation", :collection => @tournament.tournament_participations %>
 </div>
 <%= add_tour_link %>

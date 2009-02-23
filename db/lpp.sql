@@ -3,18 +3,20 @@
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='SYSTEM' */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE */;
-/*!40101 SET SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */;
+/*!40101 SET SQL_MODE='' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES */;
 /*!40103 SET SQL_NOTES='ON' */;
 
 
-# Host: localhost    Database: lunich_lpp
+# Host: localhost    Database: lpp
 # ------------------------------------------------------
-# Server version 5.0.51b-community-nt
+# Server version 4.1.21-community-nt
 
-DROP DATABASE IF EXISTS `lunich_lpp`;
-CREATE DATABASE `lunich_lpp` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `lunich_lpp`;
+DROP DATABASE IF EXISTS `lpp`;
+CREATE DATABASE `lpp` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `lpp`;
+
+/*!40101 SET NAMES utf8 */;
 
 #
 # Table structure for table events
@@ -38,7 +40,7 @@ CREATE TABLE `events` (
   `created_at` datetime default NULL,
   `updated_at` datetime default NULL,
   PRIMARY KEY  (`id`)
-) AUTO_INCREMENT=120 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table events
@@ -178,7 +180,7 @@ CREATE TABLE `players` (
   `active` tinyint(1) NOT NULL default '0',
   `raking` decimal(8,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`id`)
-) AUTO_INCREMENT=49 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table players
@@ -231,7 +233,7 @@ INSERT INTO `players` VALUES (42,'Vadim Gl',1,0);
 INSERT INTO `players` VALUES (43,'Pripara',1,0);
 INSERT INTO `players` VALUES (44,'Nikolay',1,0);
 INSERT INTO `players` VALUES (45,'Peria',1,0);
-INSERT INTO `players` VALUES (46,'пїЅпїЅпїЅ',1,0);
+INSERT INTO `players` VALUES (46,'РїС—Р…РїС—Р…РїС—Р…',1,0);
 INSERT INTO `players` VALUES (47,'Fima',1,0);
 INSERT INTO `players` VALUES (48,'Lesha',0,0);
 
@@ -244,7 +246,7 @@ INSERT INTO `players` VALUES (48,'Lesha',0,0);
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL default '',
   UNIQUE KEY `unique_schema_migrations` (`version`)
-) DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table schema_migrations
@@ -260,6 +262,7 @@ INSERT INTO `schema_migrations` VALUES ('20090119212816');
 INSERT INTO `schema_migrations` VALUES ('20090123161720');
 INSERT INTO `schema_migrations` VALUES ('20090123162012');
 INSERT INTO `schema_migrations` VALUES ('20090123222911');
+INSERT INTO `schema_migrations` VALUES ('20090125121858');
 
 /*!40101 SET NAMES utf8 */;
 
@@ -279,7 +282,7 @@ CREATE TABLE `tournaments` (
   `raking` decimal(8,4) default NULL,
   `qualify` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) AUTO_INCREMENT=8 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 #
 # Dumping data for table tournaments
@@ -296,6 +299,8 @@ INSERT INTO `tournaments` VALUES (6,'LPP-3','2008-03-15 12:00:00','2008-10-25 15
 INSERT INTO `tournaments` VALUES (7,'SPP-1','2009-01-17 12:30:00','2009-01-17 20:30:00','2009-01-23 23:39:04','2009-01-23 23:39:24',91,0.7899,71.8834,0);
 
 /*!40101 SET NAMES utf8 */;
+
+/*!40101 SET NAMES latin1 */;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
