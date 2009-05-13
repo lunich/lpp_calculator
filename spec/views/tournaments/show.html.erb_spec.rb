@@ -4,8 +4,9 @@ describe "show" do
   before(:each) do
     @p1 = mock_model(Player, :name => "P1")
     @p2 = mock_model(Player, :name => "P2")
-    @t1 = mock_model(TournamentParticipation, :player => @p1, :place => 1, :raking => 10)
-    @t2 = mock_model(TournamentParticipation, :player => @p2, :place => 2, :raking => 9)
+    tour = mock_model(Tour, :raking => 10)
+    @t1 = mock_model(TournamentParticipation, :player => @p1, :place => 1, :tour => tour)
+    @t2 = mock_model(TournamentParticipation, :player => @p2, :place => 2, :tour => tour)
     @tournament = mock_model(Tournament, :name => "LPP1",
       :start => DateTime.now - 12.days, :end => DateTime.now - 10.days,
       :total_raking => 100, :coeff => 1, :raking => 100,
@@ -26,7 +27,7 @@ describe "show" do
         with_tag("tr#tour-#{t.id}") do
           with_tag("td", "#{t.place}.")
           with_tag("td", "#{t.player.name}")
-          with_tag("td", "#{t.raking}")
+          with_tag("td", "#{t.tour.raking}")
         end
       end
     end

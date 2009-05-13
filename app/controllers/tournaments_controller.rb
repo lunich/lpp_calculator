@@ -7,6 +7,28 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id], :include => { :tournament_participations => :player })
   end
 
+  def import
+    @tournaments = Tournament.all(:order => "start")
+  end
+
+  def insert
+    @tournament = Tournament.find(params[:tournament_id])
+    if(@tournament.import(params[:file]))
+      flash[:notice] = "Tournament data successfully imported"
+      unless @tournament.import_errors.empty?
+        flash[:notice] += "<br>" + @tournament.import_errors.join("<br>")
+      end
+      redirect_to tournaments_path
+    else
+      @tournaments = Tournament.all(:order => "start")
+      flash[:error] = "Can't import tournament data"
+      unless @tournament.import_errors.empty?
+        flash[:error] += "<br>" + @tournament.import_errors.join("<br>")
+      end
+      render :action => "tournaments/import"
+    end
+  end
+
   def new
     @tournament = Tournament.new
     count = params[:count] || 16

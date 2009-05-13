@@ -35,7 +35,6 @@ class Player < ActiveRecord::Base
     active.reject do |p|
       p.calculated_raking(from) < self.calculated_raking(from)
     end.size + 1
-    #prev_equal_player(active, n, from) if n
   end
 
   def reset_raking
@@ -58,8 +57,8 @@ class Player < ActiveRecord::Base
     if self.qualifies.count(:conditions => ["time<?", from]) < 4
       0
     else
-      q = self.qualifies.find(:all, :conditions => ["time<?", from], :order => "raking")
-      (q[0,3].inject(0) { |sum, q| sum + q.raking }) / 3
+      q = self.qualifies.find(:all, :limit => 3, :conditions => ["time<?", from], :order => "raking")
+      q.inject(0) { |sum, q| sum + q.raking} / 3
     end
   end
 

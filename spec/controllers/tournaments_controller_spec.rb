@@ -22,6 +22,14 @@ describe TournamentsController do
     it "should be valid for create" do
       params_from(:post, "/tournaments").should == { :controller => "tournaments", :action => "create" }
     end
+    it "should be valid for import" do
+      route_for(:controller => "tournaments", :action => "import").should == "/tournaments/import"
+      params_from(:get, "/tournaments/import").should == { :controller => "tournaments", :action => "import" }
+    end
+    it "should be valid for insert" do
+      route_for(:controller => "tournaments", :action => "insert").should == "/tournaments/insert"
+      params_from(:put, "/tournaments/insert").should == { :controller => "tournaments", :action => "insert" }
+    end
   end
 
   describe "index" do
@@ -90,6 +98,28 @@ describe TournamentsController do
     end
   end
 
+  describe "import" do
+    before(:each) do
+      t1 = mock(Tournament, :name => "t1")
+      t2 = mock(Tournament, :name => "t2")
+      @tournaments = [t1, t2]
+      Tournament.stub!(:all).and_return(@tournaments)
+      get :import
+    end
+    it "should success" do
+      response.should be_success
+    end
+    it "should return all tournaments on GET import" do
+      Tournament.should_receive(:all).and_return(@tournaments)
+    end
+    it "should assign new tournament on GET new" do
+      assigns[:tournaments].should == @tournaments
+    end
+    it "should render valid template" do
+      response.should render_template("tournaments/import")
+    end
+  end
+
   describe "create" do
     before(:each) do
       @tournament = mock_model(Tournament, :save => true)
@@ -119,6 +149,37 @@ describe TournamentsController do
     it "should call new and save" do
       post "create", @valid_attributes
       Tournament.should_receive(:new).with(@valid_attributes[:tournament]).and_return(@tournament)
+    end
+  end
+
+  describe "insert" do
+    before(:each) do
+      @tournament = mock_model(Tournament, :import => true)
+      @tournament.stub!(:import_errors => [])
+      Tournament.stub!(:find).and_return(@tournament)
+      @valid_attributes = {
+        :tournament_id => 1,
+        :file => ""
+      }
+    end
+    it "should redirect if success" do
+      put "insert", @valid_attributes
+      flash[:notice].should == "Tournament data successfully imported"
+      response.should be_redirect
+      response.should redirect_to(tournaments_path)
+    end
+    it "should call find and import" do
+      put "insert", @valid_attributes
+      Tournament.should_receive(:find).with(@valid_attributes[:tournament_id]).and_return(@tournament)
+      @tournament.should_receive(:import).with(@valid_attributes[:file]).and_return(true)
+    end
+    it "should render import if failed" do
+      @tournament.stub!(:import => false)
+      @tournament.stub!(:import_errors => ["ERR"])
+      put "insert", @valid_attributes
+      flash[:error].should == "Can't import tournament data<br>ERR"
+      response.should be_success
+      response.should render_template("tournaments/import")
     end
   end
 end

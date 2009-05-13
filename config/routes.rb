@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
   map.resources :players
-  map.resources :tournaments
+  map.resources :tournaments, :collection => { :import => :get, :insert => :put }
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

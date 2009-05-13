@@ -2,8 +2,7 @@ class TournamentParticipation < ActiveRecord::Base
   belongs_to :tournament
   belongs_to :player
 
-  has_one :tour, :foreign_key => "parent_id",
-    :dependent => :destroy
+  has_one :tour, :foreign_key => "parent_id", :dependent => :destroy
 
   validates_associated :tour
 

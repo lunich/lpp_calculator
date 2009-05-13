@@ -9,4 +9,5 @@ module TournamentsHelper
   def players_for_select
     [["---Select Player---", nil]] + Player.all(:order => "name").map { |p| [p.name, p.id]}
   end
+
 end

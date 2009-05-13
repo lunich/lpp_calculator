@@ -9,7 +9,7 @@
       <tr id="tour-<%= t.id %>">
         <td><%= t.place %>.</td>
         <td><%= link_to(t.player.name, t.player) unless t.player.nil? %></td>
-        <td><%= t.raking %></td>
+        <td><%= t.tour.raking %></td>
       </tr>
     <% end %>
   </tbody>

@@ -93,4 +93,41 @@ describe Tournament do
       @tournament.players.should_not be_nil
     end
   end
+
+  describe "total_raking" do
+    fixtures :tournaments
+    it "should return summ for current time" do
+      Tournament.total_raking.should == 180
+    end
+    it "should return separate summ for history" do
+      Tournament.total_raking("2008-12-13 11:16:16").should == 80
+    end
+  end
+
+  describe "import" do
+    fixtures :tournaments, :tournament_participations, :players, :events
+    before(:each) do
+      p1 = players(:three)
+      p2 = players(:four)
+      File.open("temp.txt", "w") do |file|
+        file.puts("3;#{p1.name};12")
+        file.puts("4;#{p2.name};10")
+      end
+      @tournament = tournaments(:one)
+      @file = File.open("temp.txt", "r")
+    end
+    after(:each) do
+      @file.close
+    end
+    it "should create tournament_particapants" do
+      lambda do
+        @tournament.import(@file).should == true
+      end.should change(TournamentParticipation, :count).by(2)
+    end
+    it "should create events" do
+      lambda do
+        @tournament.import(@file).should == true
+      end.should change(Event, :count).by(2)
+    end
+  end
 end

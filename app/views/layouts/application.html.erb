@@ -6,6 +6,16 @@
   <%= javascript_include_tag :defaults %>
 </head>
 <body>
+  <% unless flash[:notice].blank? %>
+    <div class="flash-notice" style="color: green;">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <% unless flash[:error].blank? %>
+    <div class="flash-error" style="color: red;">
+      <%= flash[:error] %>
+    </div>
+  <% end %>
   <%= yield %>
 </body>
 </html>

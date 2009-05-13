@@ -22,6 +22,41 @@ class Tournament < ActiveRecord::Base
 
   after_update :save_tournament_participations
 
+  attr_reader :import_errors
+
+  def import(file)
+    @import_errors = []
+    begin
+      TournamentParticipation.transaction do
+        file.readlines.each do |line|
+          place_str, player_name, points_str = line.strip.split(";")
+          player = Player.find_by_name(player_name)
+          unless player.nil?
+            unless TournamentParticipation.create({
+              :tournament_id => self.id,
+              :player_id => player.id,
+              :time => self.end,
+              :place => place_str.to_i,
+              :raking => points_str.to_f,
+            })
+              raise Exception.new("Can't create tournament participation for player #{player_name}")
+            end
+          else
+            raise Exception.new("Player #{player_name} not found")
+          end
+        end
+      end
+      true
+    rescue Exception => e
+      @import_errors << e.message
+      false
+    end
+  end
+
+  def self.total_raking(from = Time.now)
+    Tournament.sum("raking", :conditions => ["end<=?", from])
+  end
+
   def new_tournament_participation_data
     @new_tournament_participation_data
   end
