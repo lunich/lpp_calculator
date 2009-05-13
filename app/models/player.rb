@@ -46,7 +46,7 @@ class Player < ActiveRecord::Base
   end
 
   def calculated_raking(from = Time.now)
-    self.events.sum("raking", :conditions => ["time<? AND type!=?",  from, "QualifyMatch"])
+    self.raking_events.sum("raking", :conditions => ["time<?",  from])
   end
 
   def self.top(from, c)
