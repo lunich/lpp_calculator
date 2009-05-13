@@ -5,7 +5,7 @@
     <th>Raking</th>
   </tr>
   <% @players.each_with_index do |p, n| %>
-    <tr id="player-<%= p.id %>">
+    <tr id="player-<%= p.id %>" class="<%= p.active? ? "active" : "inactive" %>">
       <td><%= n + 1 %>.</td>
       <td><%= link_to p.name, p %></td>
       <td align="right"><%= "%.4f" % p.calculated_raking %></td>

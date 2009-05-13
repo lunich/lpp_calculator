@@ -10,23 +10,31 @@ class Player < ActiveRecord::Base
   validates_numericality_of :raking, :greater_than_or_equal_to => 0,
     :less_than => 10000
 
-  before_create :reset_raking
+  before_create :set_raking
 
   has_many :tournament_participations
   has_many :tournaments, :through => :tournament_participations, :order => "time"
+  # All events
   has_many :events, :order => "time"
-  has_many :non_qualify_events, :class_name => "Event", :order => "time"
+  # Events except qualify_matches
+  has_many :raking_events, :class_name => "Event", :order => "time",
+    :conditions => ["type!=?", "QualifyMatch"]
+  # Matches
   has_many :matches, :order => "time"
+  # Tournaments
   has_many :tours, :order => "time"
-  has_many :qualifies, :class_name => "Match", :order => "time"
+  # Qualification (it should be has_one but it's not usefull)
+  has_many :qualifications, :order => "time"
+  # Qualifies
+  has_many :qualify_matches, :order => "time"
 
   def self.all_active(from = Time.now)
-    players = find(:all)
-    players.reject { |p| !p.is_active?(from) }.sort{ |p1, p2| p2.calculated_raking(from) <=> p1.calculated_raking(from) }
+    find(:all, :select => "players.*, sum(events.raking) as rak",
+      :joins => :events, :group => "players.id", :conditions => ["active=1 AND time<?", from], :order => "rak desc")
   end
 
   def is_active?(from = Time.now)
-    (self.qualification_points(from) > 0) ||
+    (self.qualifications.count(:conditions => ["time<?", from]) > 0) ||
       (self.tournaments.count(:conditions => ["tournaments.qualify=1 AND time<?", from]) > 0)
   end
 
@@ -34,16 +42,11 @@ class Player < ActiveRecord::Base
     active = Player.all_active(from)
     active.reject do |p|
       p.calculated_raking(from) < self.calculated_raking(from)
-    end.size + 1
-  end
-
-  def reset_raking
-    self.raking = 0
+    end.size
   end
 
   def calculated_raking(from = Time.now)
-    e = self.non_qualify_events.find(:all, :conditions => ["time<?",  from])
-    e.inject(0) { |sum, e| sum + e.raking } + qualification_points(from)
+    self.events.sum("raking", :conditions => ["time<? AND type!=?",  from, "QualifyMatch"])
   end
 
   def self.top(from, c)
@@ -53,16 +56,11 @@ class Player < ActiveRecord::Base
     end[0, c]
   end
 
-  def qualification_points(from = Time.now)
-    if self.qualifies.count(:conditions => ["time<?", from]) < 4
-      0
-    else
-      q = self.qualifies.find(:all, :limit => 3, :conditions => ["time<?", from], :order => "raking")
-      q.inject(0) { |sum, q| sum + q.raking} / 3
-    end
+protected
+  def set_raking
+    self.raking = 0
   end
 
-protected
   def prev_equal_player(players, n, from)
     if n == 0
       1

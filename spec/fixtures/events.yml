@@ -37,26 +37,32 @@ three:
 raker_q1:
   player: raker
   time: <%= (Time.now - 7.days).to_s(:db) %>
-  type: Match
+  type: QualifyMatch
   raking: 21
 
 raker_q2:
   player: raker
   time: <%= (Time.now - 6.days).to_s(:db) %>
-  type: Match
+  type: QualifyMatch
   raking: 22
 
 raker_q3:
   player: raker
   time: <%= (Time.now - 5.days).to_s(:db) %>
-  type: Match
+  type: QualifyMatch
   raking: 23
 
 raker_q4:
   player: raker
   time: <%= (Time.now - 4.days).to_s(:db) %>
-  type: Match
+  type: QualifyMatch
   raking: 24
+
+raker_q:
+  player: raker
+  time: <%= (Time.now - 4.days).to_s(:db) %>
+  type: Qualification
+  raking: 22
 
 raker_m1:
   player: raker
@@ -81,3 +87,9 @@ game2_1:
   time: <%= (Time.now - 2.days).to_s(:db) %>
   type: Match
   raking: -4
+
+qualify1_1:
+  player: one
+  time: <%= (Time.now - 2.days).to_s(:db) %>
+  type: QualifyMatch
+  raking: 4.2

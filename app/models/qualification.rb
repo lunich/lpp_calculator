@@ -1,0 +1,2 @@
+class Qualification < Event
+end

@@ -70,32 +70,26 @@ describe Player do
     end
   end
 
-  describe "qualification_points" do
+  describe "raking_events" do
     fixtures :players, :events
-    it "should return current qualification" do
+    it "should contains all tours" do
       player = players(:raker)
-      raking = player.qualifies.find(:all, :order => "raking")[0,3].inject(0) do |sum, q|
-        sum + q.raking
+      nq = player.raking_events
+      player.tours.each do |e|
+        nq.include?(e).should == true
       end
-      raking /= 3
-      player.qualification_points.should == raking
     end
-    it "should return 0 qualification not finished" do
+    it "should contains all matches" do
       player = players(:raker)
-      player.qualification_points(Time.now-10.days).should == 0
+      nq = player.raking_events
+      (player.matches - player.qualify_matches).each do |e|
+        nq.include?(e).should == true
+      end
     end
-    it "should return 0 if was not qualified" do
-      player = players(:two)
-      player.qualification_points.should == 0
-    end
-  end
-
-  describe "non_qualify_events" do
-    fixtures :players, :events
-    it "should return all matches and tours" do
+    it "should contains qualifications" do
       player = players(:raker)
-      nq = player.non_qualify_events
-      (player.tours + player.matches).each do |e|
+      nq = player.raking_events
+      player.qualifications.each do |e|
         nq.include?(e).should == true
       end
     end
@@ -105,15 +99,14 @@ describe Player do
     fixtures :players, :events
     it "should calculate current raking" do
       player = players(:raker)
-      raking = player.qualification_points
-      raking += player.non_qualify_events.inject(0) { |sum, m| sum + m.raking }
+      raking = player.raking_events.inject(0) { |sum, m| sum + m.raking }
       player.calculated_raking.should == raking
     end
     it "should calculate history raking" do
       player = players(:raker)
-      raking = player.qualification_points
-      raking += player.matches.inject(0) { |sum, m| sum + m.raking }
-      player.calculated_raking(Time.now - 2.5.days).should == raking
+      time = Time.now - 2.5.days
+      raking = player.raking_events.find(:all, :conditions => ["time<?", time]).inject(0) { |sum, m| sum + m.raking }
+      player.calculated_raking(time).should == raking
     end
   end
 
