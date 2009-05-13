@@ -1,7 +1,7 @@
 module TournamentsHelper
   def add_tour_link
     button_to_function "Add player" do |page|
-      page.insert_html(:bottom, "tours", :partial => "tournaments/tournament_participation",
+      page.insert_html(:bottom, "tournament_participations", :partial => "tournaments/tournament_participation",
         :object => TournamentParticipation.new)
     end
   end

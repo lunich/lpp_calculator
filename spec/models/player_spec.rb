@@ -133,7 +133,7 @@ describe Player do
     end
     it "should return false for history player from q-tournament" do
       player = players(:one)
-      player.is_active?(Time.now - 11.days).should == false
+      player.is_active?(Time.now - 20.days).should == true
     end
   end
 

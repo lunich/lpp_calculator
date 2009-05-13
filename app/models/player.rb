@@ -59,10 +59,7 @@ class Player < ActiveRecord::Base
       0
     else
       q = self.qualifies.find(:all, :conditions => ["time<?", from], :order => "raking")
-      total = q[0,3].inject(0) do |sum, q|
-        sum + q.raking
-      end
-      total / 3
+      (q[0,3].inject(0) { |sum, q| sum + q.raking }) / 3
     end
   end
 
