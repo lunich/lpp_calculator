@@ -40,7 +40,7 @@ describe TournamentsController do
       Tournament.stub!(:all).and_return(@tournaments)
       get "index"
     end
-    it "should assign players" do
+    it "should assign tournaments" do
       Tournament.should_receive(:all).and_return(@tournaments)
     end
     it "should success" do

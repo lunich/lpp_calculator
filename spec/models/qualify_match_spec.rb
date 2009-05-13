@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/match_spec')
+require File.expand_path(File.dirname(__FILE__) + '/event_spec')
 
 describe QualifyMatch do
-  it_should_behave_like "Match"
+  it_should_behave_like "Event"
 
   fixtures :players, :events
   before(:each) do
