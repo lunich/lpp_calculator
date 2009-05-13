@@ -1,5 +1,6 @@
 <h1><%=  @player.name %></h1>
 <h2>Raking: <%= @player.calculated_raking %></h2>
+<h2>Place: <%= @player.calculated_place %></h2>
 <% @player.events.each do |e| %>
   <p>
     Date: <%= e.time %><br>
