@@ -26,7 +26,7 @@ describe Event, :shared => true do
 
   describe "create" do
     before(:each) do
-      @event = Event.create!(@valid_attributes)
+      @event = Event.create(@valid_attributes)
     end
     it "should create a new instance given valid attributes" do
       check_created_event(@event)
