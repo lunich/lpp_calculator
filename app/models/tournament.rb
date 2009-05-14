@@ -54,7 +54,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def self.total_raking(from = Time.now)
-    Tournament.sum("raking", :conditions => ["end<=?", from])
+    Tournament.sum("raking", :conditions => ["end<?", from])
   end
 
   def new_tournament_participation_data

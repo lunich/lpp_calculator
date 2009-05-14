@@ -107,24 +107,28 @@ describe Tournament do
   describe "import" do
     fixtures :tournaments, :tournament_participations, :players, :events
     before(:each) do
-      p1 = players(:three)
-      p2 = players(:four)
-      @file = Tempfile.open("test.tmp")
-      @file.puts("3;#{p1.name};12")
-      @file.puts("4;#{p2.name};10")
       @tournament = tournaments(:one)
-    end
-    after(:each) do
-      @file.close
     end
     it "should create tournament_particapants" do
       lambda do
-        @tournament.import(@file).should == true
+        Tempfile.open("tours.tmp") do |file|
+          file.puts("3;#{players(:three).name};12")
+          file.puts("4;#{players(:four).name};10")
+          file.seek(0)
+          @tournament.import(file).should == true
+          @tournament.import_errors.size.should == 0
+        end
       end.should change(TournamentParticipation, :count).by(2)
     end
     it "should create events" do
       lambda do
-        @tournament.import(@file).should == true
+        Tempfile.open("tours.tmp") do |file|
+          file.puts("3;#{players(:three).name};12")
+          file.puts("4;#{players(:four).name};10")
+          file.seek(0)
+          @tournament.import(file).should == true
+          @tournament.import_errors.size.should == 0
+        end
       end.should change(Event, :count).by(2)
     end
   end

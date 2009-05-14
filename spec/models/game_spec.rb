@@ -61,23 +61,25 @@ describe Game, :shared => true do
 
   describe "import" do
     fixtures :players
-    before(:each) do
-      @file = Tempfile.open("test.tmp")
-      @file.puts("21.12.2009;#{players(:one).name};+12.5656;#{players(:two).name};-12.5656;8;7")
-      @file.puts("22.12.2009;#{players(:one).name};-12.5656;#{players(:two).name};+12.5656;7;8")
-    end
     it "should create 2 games" do
       lambda do
-        Game.import(@file)
+        Tempfile.open("games.tmp") do |file|
+          file.puts("21.12.2009;#{players(:one).name};+12.5656;#{players(:two).name};-12.5656;8;7")
+          file.puts("22.12.2009;#{players(:one).name};-12.5656;#{players(:two).name};+12.5656;7;8")
+          file.seek(0)
+          Game.import(file).should == true
+        end
       end.should change(Game, :count).by(2)
     end
     it "should create 4 matches" do
       lambda do
-        Game.import(@file)
+        Tempfile.open("games.tmp") do |file|
+          file.puts("21.12.2009;#{players(:one).name};+12.5656;#{players(:two).name};-12.5656;8;7")
+          file.puts("22.12.2009;#{players(:one).name};-12.5656;#{players(:two).name};+12.5656;7;8")
+          file.seek(0)
+          Game.import(file).should == true
+        end
       end.should change(Match, :count).by(4)
-    end
-    after(:each) do
-      @file.close
     end
   end
 
