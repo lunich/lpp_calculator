@@ -25,7 +25,7 @@ class TournamentsController < ApplicationController
       unless @tournament.import_errors.empty?
         flash[:error] += "<br>" + @tournament.import_errors.join("<br>")
       end
-      render :action => "tournaments/import"
+      render :action => "import"
     end
   end
 

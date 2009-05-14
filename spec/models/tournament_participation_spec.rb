@@ -9,8 +9,8 @@ describe TournamentParticipation do
       :tournament_id => @tournament.id,
       :player_id => @player.id,
       :time => Time.now,
-      :place => 3,
-      :raking => 12
+      :raking => 12,
+      :place => 3
     }
   end
 
@@ -47,9 +47,7 @@ describe TournamentParticipation do
 
   describe "create should require" do
     [ :player_id,
-      #:tournament_id,
-      :place,
-      :raking].each do |attr|
+      :place].each do |attr|
       it "#{attr}" do
         @tp = TournamentParticipation.create(@valid_attributes.merge(attr => nil))
         @tp.valid?.should == false

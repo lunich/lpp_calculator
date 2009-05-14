@@ -9,7 +9,8 @@ describe Match do
     @player1 = players(:one)
     @valid_attributes = {
       :player_id => @player1.id,
-      :time => Time.now
+      :time => Time.now,
+      :raking => 12,
     }
   end
 

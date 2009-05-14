@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "new" do
+describe "import" do
   before(:each) do
     t1 = mock_model(Tournament, :name => "t1")
     t2 = mock_model(Tournament, :name => "t2")
@@ -18,10 +18,10 @@ describe "new" do
       end
       with_tag("p") do
         with_tag("label")
-        with_tag("file#file")
+        with_tag("input#file")
       end
       with_tag("p") do
-        with_tag("input#tournament_submit")
+        with_tag("input")
         with_tag("a")
       end
     end

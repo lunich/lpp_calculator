@@ -6,10 +6,11 @@ describe QualifyMatch do
 
   fixtures :players, :events
   before(:each) do
-    @player1 = players(:one)
+    @player1 = players(:two)
     @valid_attributes = {
       :player_id => @player1.id,
-      :time => Time.now
+      :time => Time.now,
+      :raking => 12,
     }
   end
 
@@ -24,9 +25,9 @@ describe QualifyMatch do
     it "should increase players' q-matches size" do
       @player1.qualify_matches.count.should == @count + 1
     end
-    describe "after 3 aulify matches" do
+    describe "after 3 qulify matches" do
       before(:each) do
-        3.times do
+        2.times do
           QualifyMatch.create(@valid_attributes)
         end
       end

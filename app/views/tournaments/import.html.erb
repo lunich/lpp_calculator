@@ -1,5 +1,5 @@
 <h1>Import tournament data</h1>
-<% form_tag insert_tournaments_path, :multipart => true do %>
+<% form_tag insert_tournaments_path, :method => :put, :multipart => true do %>
   <p>
     <%= label_tag "tournament_id", "Tournament:" %>
     <%= select_tag "tournament_id", options_for_select(@tournaments.map { |t| [t.name, t.id] }) %>

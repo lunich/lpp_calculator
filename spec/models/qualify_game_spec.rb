@@ -2,7 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/game_spec')
 
 describe QualifyGame do
-  it_should_behave_like "Game"
+  # Nope, should not :)
+  #it_should_behave_like "Game"
+  fixtures :players
 
   before(:each) do
     @player1 = players(:one)
@@ -10,6 +12,8 @@ describe QualifyGame do
     @valid_attributes = {
       :result1 => 5,
       :result2 => 4,
+      :raking1 => 12,
+      :raking2 => 0,
       :player1_id => @player1.id,
       :player2_id => @player2.id,
       :time => Time.now

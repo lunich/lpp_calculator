@@ -1,0 +1,32 @@
+<table id="games">
+  <tr id="header">
+    <th>Date</th>
+    <th>Player 1</th>
+    <th>Player 1 points</th>
+    <th>Player 2</th>
+    <th>Player 2 points</th>
+    <th>Result</th>
+  </tr>
+  <% @games.each do |g| %>
+    <tr id="game-<%= g.id %>">
+      <td>
+        <%= g.time.strftime("%d.%m.%Y") %>
+      </td>
+      <td>
+        <%= link_to(g.player1.name, g.player1) %>
+      </td>
+      <td>
+        <%= g.match1.raking %>
+      </td>
+      <td>
+        <%= link_to(g.player2.name, g.player2) %>
+      </td>
+      <td>
+        <%= g.match2.raking %>
+      </td>
+      <td>
+        <%= "#{g.result1}:#{g.result2}" %>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -2,7 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/game_spec')
 
 describe TournamentGame do
-  it_should_behave_like "Game"
+  # Nope, should not :)
+  #it_should_behave_like "Game"
+  fixtures :players
 
   before(:each) do
     @player1 = players(:one)

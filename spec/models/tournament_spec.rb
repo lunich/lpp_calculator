@@ -109,12 +109,10 @@ describe Tournament do
     before(:each) do
       p1 = players(:three)
       p2 = players(:four)
-      File.open("temp.txt", "w") do |file|
-        file.puts("3;#{p1.name};12")
-        file.puts("4;#{p2.name};10")
-      end
+      @file = Tempfile.open("test.tmp")
+      @file.puts("3;#{p1.name};12")
+      @file.puts("4;#{p2.name};10")
       @tournament = tournaments(:one)
-      @file = File.open("temp.txt", "r")
     end
     after(:each) do
       @file.close

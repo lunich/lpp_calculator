@@ -9,7 +9,6 @@ class TournamentParticipation < ActiveRecord::Base
   validates_presence_of :tournament_id, :on => :update
   validates_presence_of :player_id
   validates_presence_of :place
-  validates_presence_of :raking
 
   validates_uniqueness_of :player_id, :scope => :tournament_id
   validates_uniqueness_of :tournament_id, :scope => :player_id
@@ -20,6 +19,7 @@ class TournamentParticipation < ActiveRecord::Base
 
   before_validation_on_create :build_tour
 
+protected
   def build_tour
     self.tour = Tour.new(
       :player_id => self.player_id,

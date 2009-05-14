@@ -6,16 +6,21 @@ describe Event, :shared => true do
     @player1 = players(:one)
     @valid_attributes = {
       :player_id => @player1.id,
-      :time => Time.now
+      :time => Time.now,
+      :raking => 12,
     }
   end
 
   describe "create" do
-    [:player_id, :time].each do |attr|
+    [:player_id, :time, :raking].each do |attr|
       it "should require #{attr}" do
         @event = Event.create(@valid_attributes.merge(attr => nil))
         @event.errors.on(attr).should_not be_nil
       end
+    end
+    it "should require numeric raking" do
+      @event = Event.create(@valid_attributes.merge(:raking => "A"))
+      @event.errors.on(:raking).should_not be_nil
     end
   end
 
