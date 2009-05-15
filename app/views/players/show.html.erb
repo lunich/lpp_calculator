@@ -1,17 +1,36 @@
 <% content_for :title, @player.name %>
 
-<h1><%= "#{@player.name} (#{@player.full_name})" %></h1>
-<h2><%= "Raking: #{@player.calculated_raking} (#{link_to("#{@player.calculated_place} of #{@players_count}", players_path)})" %></h2>
+<h1>
+  <%= "Player: #{@player.name} (#{@player.full_name})" %>
+</h1>
+<h2><%= "Raking: #{@player.calculated_raking} (#{link_to("#{@player.calculated_place} / #{@players_count}", players_path)})" %></h2>
+<h3>
+  <%= pluralize(@player.tours.count, "tournament") %>,
+  <%= pluralize(@player.matches.count, "match") %>
+</h3>
 <% @player.events.each do |e| %>
-  <p>
-    Date: <%= e.time %><br>
+  <div class="event <%= e.type %>" id="event-<%= e.id %>">
+    <p>
+      <label>Date: </label>
+      <span><%= format_time(e.time) %></span>
+    </p>
     <% if(Tour === e) %>
-      Tournament: <%= link_to e.tournament.name, e.tournament %><br>
-      Place: <%= e.tournament_participation.place %> of <%= e.tournament.players.count %><br>
+      <p>
+        <label>Tournament: </label>
+        <span>
+          <%= link_to("#{e.tournament.name}", e.tournament) %>
+          <%= "(#{e.tournament_participation.place} / #{e.tournament.players.count})" %>
+        </span>
+      </p>
     <% elsif(Match === e) %>
-      Match: <%= "#{e.game.player1.name} - #{e.game.player2.name}" %><br>
-      Result: <%= e.game.result1 %>:<%= e.game.result2 %><br>
+      <p>
+        <label>Match: </label>
+        <span><%= link_to(format_game_simple(e.game), game_path(e.game)) %></span>
+      </p>
     <% end %>
-    Points: <%= e.raking %><br>
-  </p>
+    <p>
+      <label>Points: </label>
+      <span><%= e.raking %></span>
+    </p>
+  </div>
 <% end %>

@@ -1,0 +1,9 @@
+<div class="game <%= game.type %>" id="game-<%= game.id %>">
+  <p class="date">
+    <%= format_time(game.time) %>
+    <span class="details">
+      <%= link_to("[details]", game_path(game)) %>
+    </span>
+  </p>
+  <%= format_game(game) %>
+</div>

@@ -1,2 +1,3 @@
-<% content_for :title, time_format(@game.time) %>
-<%= format_game(@game) %>
+<% content_for :title, format_time(@game.time) %>
+
+<%= render :partial => @game %>

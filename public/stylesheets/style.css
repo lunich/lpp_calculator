@@ -1,0 +1,136 @@
+html
+{
+  background-color: #5e757b;
+}
+body
+{
+  padding: 1%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #96abb7;
+  width: 60%;
+  margin: auto;
+  border: 1px solid #ffffff;
+}
+h1
+{
+  color: #ffffff;
+  font-size: 160%;
+  font-weight: bold;
+}
+h2
+{
+  color: #ffffff;
+  font-size: 120%;
+  font-weight: bold;
+}
+h3
+{
+  color: #ffffff;
+  font-size: 100%;
+  font-weight: bold;
+}
+a
+{
+  color: #ffffff;
+  font-weight: bold;
+}
+p
+{
+  font-size: 100%;
+}
+div.content
+{
+
+}
+div.footer
+{
+  font-size: 80%;
+  color: #606060;
+  padding-top: 1%;
+  text-align: center;
+  border-top: 1px solid white;
+}
+div.header
+{
+  border-bottom: 1px solid white;
+}
+div.logo
+{
+  background: url(/images/logo.gif) repeat-x scroll 50% 0;
+  width: 254px;
+  height: 178px;
+}
+div.logo img
+{
+  padding: 0;
+  margin: 0;
+}
+div.event
+{
+  padding: 1%;
+  margin-bottom: 1%;
+  border: 1px solid #ffffff;
+}
+
+div.event p
+{
+  padding: 0;
+  margin: 0.1%;
+}
+
+div.event p label
+{
+  width: 15%;
+  font-weight: bold;
+  display: inline-block;
+}
+div.game
+{
+  padding: 1%;
+  margin-bottom: 1%;
+  border: 1px solid #ffffff;
+  background-color: #b69ba7;
+}
+div.game p.date
+{
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+div.game p.date span.details
+{
+  font-size: 80%;
+}
+div.game span.raking
+{
+}
+div.game .positive
+{
+  color: green;
+}
+div.game .negative
+{
+  color: red;
+}
+div.game .result
+{
+  font-weight: bold;
+}
+div.Match
+{
+  background-color: #b69ba7;
+}
+div.Tour
+{
+  background-color: #86cba7;
+}
+div.Qualification
+{
+  background-color: #869bd7;
+}
+div.QualifyMatch,
+div.QualifierMatch,
+div.game.QualifyGame
+{
+  background-color: #a0a0a0;
+}

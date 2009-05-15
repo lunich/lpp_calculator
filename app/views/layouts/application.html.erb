@@ -3,19 +3,28 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title><%= yield :title %></title>
+  <%= stylesheet_link_tag "style" %>
   <%= javascript_include_tag :defaults %>
 </head>
 <body>
-  <% unless flash[:notice].blank? %>
-    <div class="flash-notice" style="color: green;">
-      <%= flash[:notice] %>
+  <div class="content">
+    <div class="header">
+      <div class="logo"></div>
     </div>
-  <% end %>
-  <% unless flash[:error].blank? %>
-    <div class="flash-error" style="color: red;">
-      <%= flash[:error] %>
+    <% unless flash[:notice].blank? %>
+      <div class="flash-notice" style="color: green;">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <% unless flash[:error].blank? %>
+      <div class="flash-error" style="color: red;">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+    <%= yield %>
+    <div class="footer">
+      © 2009 Lunich
     </div>
-  <% end %>
-  <%= yield %>
+  </div>
 </body>
 </html>

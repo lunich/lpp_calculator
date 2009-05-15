@@ -15,20 +15,20 @@ class Player < ActiveRecord::Base
   has_many :tournament_participations
   has_many :tournaments, :through => :tournament_participations, :order => "time"
   # All events
-  has_many :events, :order => "time"
+  has_many :events, :order => "time DESC"
   # Events except qualify_matches and qualifier_matches
-  has_many :raking_events, :class_name => "Event", :order => "time",
+  has_many :raking_events, :class_name => "Event", :order => "time DESC",
     :conditions => ["type NOT IN (?)", ["QualifyMatch", "QualifierMatch"]]
   # Matches
-  has_many :matches, :order => "time"
+  has_many :matches, :order => "time DESC"
   # Tournaments
-  has_many :tours, :order => "time"
+  has_many :tours, :order => "time DESC"
   # Qualification (it should be has_one but it's not usefull)
-  has_many :qualifications, :order => "time"
+  has_many :qualifications, :order => "time DESC"
   # Qualifies
-  has_many :qualify_matches, :order => "time"
+  has_many :qualify_matches, :order => "time DESC"
   # Qualifiers
-  has_many :qualifier_matches, :order => "time"
+  has_many :qualifier_matches, :order => "time DESC"
 
   def self.all_active(from = Time.now)
     find(:all, :select => "players.*, sum(events.raking) as rak",

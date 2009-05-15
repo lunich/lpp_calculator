@@ -25,6 +25,18 @@ class Game < ActiveRecord::Base
   attr_accessor :raking2
   cattr_reader :import_errors
 
+  def winner?(player)
+    ((result1 > result2)&&(player1 == player))||((result1 < result2)&&(player2 == player))
+  end
+
+  def loser?(player)
+    ((result1 < result2)&&(player1 == player))||((result1 > result2)&&(player2 == player))
+  end
+
+  def draw?
+    result1 == result2
+  end
+
   def self.import(file, klass = Game)
     @@import_errors = []
     hashed_dates = {}
