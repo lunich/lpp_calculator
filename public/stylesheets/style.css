@@ -38,6 +38,10 @@ p
 {
   font-size: 100%;
 }
+div.clear
+{
+  clear: both;
+}
 div.content
 {
 
@@ -133,4 +137,12 @@ div.QualifierMatch,
 div.game.QualifyGame
 {
   background-color: #a0a0a0;
+}
+div.top-menu
+{
+}
+div.top-menu div.menu-item
+{
+  padding-right: 10%;
+  float: left;
 }

@@ -1,0 +1,12 @@
+<div class="top-menu">
+  <div class="menu-item">
+    <%= link_to_unless_current("Tournaments", tournaments_path) %>
+  </div>
+  <div class="menu-item">
+    <%= link_to_unless_current("Players", players_path) %>
+  </div>
+  <div class="menu-item">
+    <%= link_to_unless_current("Games", games_path) %>
+  </div>
+  <div class="clear"></div>
+</div>

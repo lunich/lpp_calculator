@@ -8,23 +8,11 @@
 </head>
 <body>
   <div class="content">
-    <div class="header">
-      <div class="logo"></div>
-    </div>
-    <% unless flash[:notice].blank? %>
-      <div class="flash-notice" style="color: green;">
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
-    <% unless flash[:error].blank? %>
-      <div class="flash-error" style="color: red;">
-        <%= flash[:error] %>
-      </div>
-    <% end %>
+    <%= render :partial => "shared/header" %>
+    <%= render :partial => "shared/top_menu" %>
+    <%= render :partial => "shared/flash", :object => flash %>
     <%= yield %>
-    <div class="footer">
-      © 2009 Lunich
-    </div>
+    <%= render :partial => "shared/footer" %>
   </div>
 </body>
 </html>
