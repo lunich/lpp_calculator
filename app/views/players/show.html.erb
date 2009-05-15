@@ -9,7 +9,7 @@
   <%= pluralize(@player.matches.count, "match") %>
 </h3>
 <% @player.events.each do |e| %>
-  <div class="event <%= e.type %>" id="event-<%= e.id %>">
+  <div class="event <%= e.class %>" id="event-<%= e.id %>">
     <p>
       <label>Date: </label>
       <span><%= format_time(e.time) %></span>

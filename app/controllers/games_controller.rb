@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   def index
-    @games = Game.all(:order => "time DESC",
-      :include => [:player1, :player2, :match1, :match2])
+    @games = Game.paginate(:page => params[:page], :per_page => 20,
+      :order => "time DESC", :include => [:player1, :player2, :match1, :match2])
   end
 
   def show

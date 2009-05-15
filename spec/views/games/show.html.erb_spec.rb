@@ -2,8 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "show" do
   before(:each) do
-    match1 = mock_model(Match, :raking => 12.000)
-    match2 = mock_model(Match, :raking => -12.000)
+    match1 = mock_model(Match, :raking => 12.000, :to_sign => "positive")
+    match2 = mock_model(Match, :raking => -12.000, :to_sign => "negative")
     player1 = mock_model(Player, :name => "Player1")
     player2 = mock_model(Player, :name => "Player2")
     @game = mock_model(Game, :time => Time.now - 5.days,

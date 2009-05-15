@@ -30,10 +30,8 @@ describe GamesController do
 
   describe "index" do
     before(:each) do
-      g1 = mock_model(Game)
-      g2 = mock_model(Game)
-      @games = [g1, g2]
-      Game.stub!(:all, @games)
+      @games = mock(:tatal_pages => 2)
+      Game.stub!(:paginate, @games)
       get "index"
     end
     it "should success" do
@@ -43,7 +41,7 @@ describe GamesController do
       response.should render_template("games/index")
     end
     it "should call Games.all method" do
-      Game.should_receive(:all).and_return(@games)
+      Game.should_receive(:paginate).and_return(@games)
     end
     it "should assign games" do
       #assigns[:games].should == @games
