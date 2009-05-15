@@ -32,7 +32,10 @@ class Player < ActiveRecord::Base
 
   def self.all_active(from = Time.now)
     find(:all, :select => "players.*, sum(events.raking) as rak",
-      :joins => :events, :group => "players.id", :conditions => ["active=1 AND time<?", from], :order => "rak desc")
+      :joins => :events,
+      :group => "players.id",
+      :conditions => ["active=1 AND time<? AND events.type NOT IN (?)", from, ["QualifyMatch", "QualifierMatch"]],
+      :order => "rak desc")
   end
 
   def is_active?(from = Time.now)

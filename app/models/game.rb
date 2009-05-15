@@ -21,7 +21,8 @@ class Game < ActiveRecord::Base
 
   before_validation_on_create :build_matches
 
-  attr_accessor :raking1, :raking2
+  attr_accessor :raking1
+  attr_accessor :raking2
   cattr_reader :import_errors
 
   def self.import(file, klass = Game)
@@ -30,7 +31,11 @@ class Game < ActiveRecord::Base
     begin
       klass.transaction do
         file.readlines.each do |line|
-          date_str, p1_str, r1_str, p2_str, r2_str, res1_str, res2_str = line.strip.split(";")
+          if(klass == QualifyGame)
+            date_str, p1_str, r1_str, p2_str, r2_str, res1_str, res2_str, q_str = line.strip.split(";")
+          else
+            date_str, p1_str, r1_str, p2_str, r2_str, res1_str, res2_str = line.strip.split(";")
+          end
           p1 = Player.find_by_name(p1_str)
           if(p1.nil?)
             raise Exception.new("Can't create game for player #{p1_str} (date: #{date_str})")
@@ -42,10 +47,15 @@ class Game < ActiveRecord::Base
               h = hashed_dates.has_key?(date_str) ? (hashed_dates[date_str] += 1) : (hashed_dates[date_str] = 12)
               d, m, y = date_str.split(".")
               date = Time.gm(y, m, d, h)
-              unless klass.create(:player1_id => p1.id, :player2_id => p2.id,
+              params = {
+                :player1_id => p1.id, :player2_id => p2.id,
                 :raking1 => r1_str.to_f, :raking2 => r2_str.to_f,
                 :result1 => res1_str, :result2 => res2_str,
-                :time => date)
+                :time => date
+              }
+              params.merge!(:qualifier => q_str.to_i) if(klass == QualifyGame)
+              puts params.inspect
+              unless klass.create(params)
                 raise Exception.new("Can't create game for players #{p1_str} and #{p2_str} (date: #{date_str})")
               end
             end

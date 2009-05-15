@@ -3,10 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "index" do
   before(:each) do
     @player1 = mock_model(Player, :name => "P1",
-      :raking => 12, :calculated_place => 1, :active? => true,
+      :raking => 12, :calculated_place => 1, :is_active? => true,
       :calculated_raking => 21)
     @player2 = mock_model(Player, :name => "P2",
-      :raking => 8, :calculated_place => 2, :active? => true,
+      :raking => 8, :calculated_place => 2, :is_active? => true,
       :calculated_raking => 20)
     @players = [@player1, @player2]
     assigns[:players] = @players

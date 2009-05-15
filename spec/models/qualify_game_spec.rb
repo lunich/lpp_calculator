@@ -27,5 +27,15 @@ describe QualifyGame do
         qgame.valid?.should == true
       end.should change(QualifyGame, :count).by(1)
     end
+    it "should create QualifyMatch" do
+      lambda do
+        qgame = QualifyGame.create(@valid_attributes)
+      end.should change(QualifyMatch, :count).by(1)
+    end
+    it "should create QualifierMatch" do
+      lambda do
+        qgame = QualifyGame.create(@valid_attributes)
+      end.should change(QualifierMatch, :count).by(1)
+    end
   end
 end

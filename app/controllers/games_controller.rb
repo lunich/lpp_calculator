@@ -24,7 +24,7 @@ class GamesController < ApplicationController
   end
 
   def insert_q
-    if(QualifyGame.import(params[:file]))
+    if(Game.import(params[:file], QualifyGame))
       flash[:notice] = "Games data was successfully imported"
       redirect_to games_path
     else

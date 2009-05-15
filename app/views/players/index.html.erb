@@ -1,3 +1,12 @@
+<% content_for :title, "Players" %>
+
+<style>
+  tr.inactive
+  {
+    background-color: grey;
+  }
+</style>
+
 <table id="players">
   <tr id="header">
     <th>#</th>
@@ -5,7 +14,7 @@
     <th>Raking</th>
   </tr>
   <% @players.each_with_index do |p, n| %>
-    <tr id="player-<%= p.id %>" class="<%= p.active? ? "active" : "inactive" %>">
+    <tr id="player-<%= p.id %>" class="<%= p.is_active? ? "active" : "inactive" %>">
       <td><%= n + 1 %>.</td>
       <td><%= link_to p.name, p %></td>
       <td align="right"><%= "%.4f" % p.calculated_raking %></td>

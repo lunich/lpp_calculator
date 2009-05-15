@@ -42,16 +42,18 @@ File.open("rakings", "r") do |file|
       file.readline
       i += 1
     elsif line.match(/квалификация/i)
-      qualifies << line
+      line = file.readline.strip
       i += 1
-      while("" != file.readline.strip)&&(!file.eof?)
-        i += 1
-      end
+      m = parse_match(date, line)
+      m.nil? ? err << [line, i] : qualifies << m
+      file.readline
+      i += 1
     else
       err << [line, i]
     end
   end
 end
 
-puts matches
-puts err
+#puts matches
+puts qualifies
+#puts err

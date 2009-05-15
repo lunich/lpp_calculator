@@ -61,6 +61,16 @@ describe Game, :shared => true do
 
   describe "import" do
     fixtures :players
+    it "should create 2 qualify games" do
+      lambda do
+        Tempfile.open("games.tmp") do |file|
+          file.puts("21.12.2009;#{players(:one).name};+12.5656;#{players(:two).name};-12.5656;8;7;1")
+          file.puts("22.12.2009;#{players(:one).name};-12.5656;#{players(:two).name};+12.5656;7;8;2")
+          file.seek(0)
+          Game.import(file, QualifyGame).should == true
+        end
+      end.should change(QualifyGame, :count).by(2)
+    end
     it "should create 2 games" do
       lambda do
         Tempfile.open("games.tmp") do |file|
