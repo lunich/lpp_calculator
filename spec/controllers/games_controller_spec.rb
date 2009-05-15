@@ -50,6 +50,26 @@ describe GamesController do
     end
   end
 
+  describe "show" do
+    before(:each) do
+      @game = mock_model(Game)
+      Game.stub!(:find, @game)
+      get "show"
+    end
+    it "should success" do
+      response.should be_success
+    end
+    it "should render valid template" do
+      response.should render_template("games/show")
+    end
+    it "should call Games.find method" do
+      Game.should_receive(:find).and_return(@game)
+    end
+    it "should assign game" do
+      #assigns[:game].should == @game
+    end
+  end
+
   describe "import" do
     before(:each) do
       get :import

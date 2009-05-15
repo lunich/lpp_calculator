@@ -1,13 +1,16 @@
-<h1><%=  @player.name %></h1>
-<h2>Raking: <%= @player.calculated_raking %></h2>
-<h2>Place: <%= @player.calculated_place %></h2>
+<% content_for :title, @player.name %>
+
+<h1><%= "#{@player.name} (#{@player.full_name})" %></h1>
+<h2><%= "Raking: #{@player.calculated_raking} (#{link_to("#{@player.calculated_place} of #{@players_count}", players_path)})" %></h2>
 <% @player.events.each do |e| %>
   <p>
     Date: <%= e.time %><br>
-    <% if e.instance_of?(Tour) %>
+    <% if(Tour === e) %>
       Tournament: <%= link_to e.tournament.name, e.tournament %><br>
       Place: <%= e.tournament_participation.place %> of <%= e.tournament.players.count %><br>
-    <% else %>
+    <% elsif(Match === e) %>
+      Match: <%= "#{e.game.player1.name} - #{e.game.player2.name}" %><br>
+      Result: <%= e.game.result1 %>:<%= e.game.result2 %><br>
     <% end %>
     Points: <%= e.raking %><br>
   </p>

@@ -34,7 +34,7 @@ class Player < ActiveRecord::Base
     find(:all, :select => "players.*, sum(events.raking) as rak",
       :joins => :events,
       :group => "players.id",
-      :conditions => ["active=1 AND time<? AND events.type NOT IN (?)", from, ["QualifyMatch", "QualifierMatch"]],
+      :conditions => ["events.time<? AND events.type NOT IN (?)", from, ["QualifyMatch", "QualifierMatch"]],
       :order => "rak desc")
   end
 

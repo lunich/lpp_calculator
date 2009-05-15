@@ -1,17 +1,19 @@
 class QualifyGame < Game
   attr_accessor :qualifier
 
-  has_one :player1, :class_name => "Player", :through => :match1, :source => :player
-  has_one :player2, :class_name => "Player", :through => :match2, :source => :player
-
   has_one :match1, :class_name => "QualifyMatch", :foreign_key => "parent_id",
-    :conditions => ["events.player_id=games.player1_id OR events.player_id=games.player2_id"],
     :include => "game",
     :dependent => :destroy
   has_one :match2, :class_name => "QualifierMatch", :foreign_key => "parent_id",
-    :conditions => ["events.player_id=games.player1_id OR events.player_id=games.player2_id"],
     :include => "game",
     :dependent => :destroy
+
+  has_one :player1, :class_name => "Player",
+    :through => :match1,
+    :source => :player
+  has_one :player2, :class_name => "Player",
+    :through => :match2,
+    :source => :player
 
   def self.import(file)
     Game.import(file, QualifyGame)

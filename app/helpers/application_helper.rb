@@ -3,4 +3,8 @@ module ApplicationHelper
   def item_prefix(item)
     item.new_record? ? 'new' : 'existing'
   end
+
+  def time_format(time)
+    time.strftime("%d.%m.%Y")
+  end
 end

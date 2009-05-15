@@ -5,5 +5,6 @@ class PlayersController < ApplicationController
 
   def show
     @player = Player.find(params[:id], :include => :events)
+    @players_count = Player.count
   end
 end

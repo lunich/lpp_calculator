@@ -1,3 +1,6 @@
+<% content_for :title, "Raking games" %>
+
+<h1><%= pluralize(@games.size, "raking game") %> total</h1>
 <table id="games">
   <tr id="header">
     <th>Date</th>
