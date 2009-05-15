@@ -12,26 +12,9 @@
 # ------------------------------------------------------
 # Server version 4.1.21-community-nt
 
-DROP DATABASE IF EXISTS `lpp`;
-CREATE DATABASE `lpp` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `lpp`;
+USE `lunich_lpp`;
 
 /*!40101 SET NAMES utf8 */;
-
-#
-# Table structure for table events
-#
-
-CREATE TABLE `events` (
-  `id` int(11) NOT NULL auto_increment,
-  `player_id` int(11) default NULL,
-  `time` datetime default NULL,
-  `type` char(255) character set cp1251 default NULL,
-  `raking` decimal(8,4) default NULL,
-  `comment` char(255) character set cp1251 default NULL,
-  `parent_id` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
 
 #
 # Dumping data for table events
@@ -781,22 +764,6 @@ INSERT INTO `events` VALUES (5067,6,'2007-10-27 12:00:00','Match',-2.3143,NULL,2
 INSERT INTO `events` VALUES (5068,16,'2007-10-27 12:00:00','Match',2.3143,NULL,295);
 
 #
-# Table structure for table games
-#
-
-CREATE TABLE `games` (
-  `id` int(11) NOT NULL auto_increment,
-  `player1_id` int(11) default NULL,
-  `player2_id` int(11) default NULL,
-  `result1` int(11) default NULL,
-  `result2` int(11) default NULL,
-  `time` datetime default NULL,
-  `type` varchar(255) collate utf8_unicode_ci default NULL,
-  `parent_id` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-#
 # Dumping data for table games
 #
 
@@ -1089,19 +1056,6 @@ INSERT INTO `games` VALUES (294,16,14,5,4,'2008-02-02 13:00:00',NULL,NULL);
 INSERT INTO `games` VALUES (295,6,16,5,4,'2007-10-27 12:00:00',NULL,NULL);
 
 #
-# Table structure for table players
-#
-
-CREATE TABLE `players` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` char(255) character set cp1251 NOT NULL default '<noname>',
-  `active` tinyint(1) NOT NULL default '0',
-  `raking` decimal(8,4) NOT NULL default '0.0000',
-  `full_name` char(255) collate utf8_unicode_ci default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
-
-#
 # Dumping data for table players
 #
 
@@ -1159,15 +1113,6 @@ INSERT INTO `players` VALUES (51,'AlexanderS',1,0,'Александр');
 INSERT INTO `players` VALUES (52,'Pavel',0,0,'Павел');
 
 #
-# Table structure for table schema_migrations
-#
-
-CREATE TABLE `schema_migrations` (
-  `version` char(255) character set cp1251 NOT NULL default '',
-  UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
-
-#
 # Dumping data for table schema_migrations
 #
 
@@ -1185,19 +1130,6 @@ INSERT INTO `schema_migrations` VALUES ('20090223113728');
 INSERT INTO `schema_migrations` VALUES ('20090223115158');
 INSERT INTO `schema_migrations` VALUES ('20090223134028');
 INSERT INTO `schema_migrations` VALUES ('20090223140513');
-
-#
-# Table structure for table tournament_participations
-#
-
-CREATE TABLE `tournament_participations` (
-  `id` int(11) NOT NULL auto_increment,
-  `tournament_id` int(11) default NULL,
-  `player_id` int(11) default NULL,
-  `time` datetime default NULL,
-  `place` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Dumping data for table tournament_participations
@@ -1359,24 +1291,6 @@ INSERT INTO `tournament_participations` VALUES (277,10,15,'2009-04-11 20:30:00',
 INSERT INTO `tournament_participations` VALUES (278,10,50,'2009-04-11 20:30:00',7);
 INSERT INTO `tournament_participations` VALUES (279,10,11,'2009-04-11 20:30:00',9);
 INSERT INTO `tournament_participations` VALUES (280,10,12,'2009-04-11 20:30:00',9);
-
-#
-# Table structure for table tournaments
-#
-
-CREATE TABLE `tournaments` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` char(255) character set cp1251 default NULL,
-  `start` datetime default NULL,
-  `end` datetime default NULL,
-  `created_at` datetime default NULL,
-  `updated_at` datetime default NULL,
-  `total_raking` decimal(8,4) default NULL,
-  `coeff` decimal(8,4) default NULL,
-  `raking` decimal(8,4) default NULL,
-  `qualify` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
 
 #
 # Dumping data for table tournaments
