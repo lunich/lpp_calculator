@@ -8,6 +8,14 @@
   <%= pluralize(@player.tours.count, "tournament") %>,
   <%= pluralize(@player.matches.count, "match") %>
 </h3>
+<h3>
+  In LPP from: <%= format_time(@player.first_event.time) %>
+</h3>
+<h3>
+  Qualified: <%= @player.qualifications.empty? ?
+    format_time(@player.qualify_tournaments.first.end) :
+    format_time(@player.qualifications.first.time) %>
+</h3>
 <% @player.events.each do |e| %>
   <div class="event <%= e.class %>" id="event-<%= e.id %>">
     <p>

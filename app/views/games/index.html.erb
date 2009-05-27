@@ -1,6 +1,6 @@
 <% content_for :title, "Raking games" %>
 
-<h1><%= "#{pluralize(@games.size, "raking game")} (of #{})" %> </h1>
+<h1><%= "#{pluralize(@games.size, "raking game")} (#{@games.total_entries} total)" %> </h1>
 <div class="games">
   <%= render :partial => "games/game", :collection => @games %>
   <%= will_paginate @games %>

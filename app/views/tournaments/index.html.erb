@@ -1,5 +1,9 @@
 <% content_for :title, "Tournaments" %>
 
+<% if @player %>
+<h3>Tournaments for <%= link_to(@player.name, @player) %></h3>
+<% end %>
+
 <table id="tournaments">
   <tbody>
     <tr id="header">

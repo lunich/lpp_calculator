@@ -1,6 +1,12 @@
 class TournamentsController < ApplicationController
+  before_filter :find_player, :only => [:index]
+
   def index
-    @tournaments = Tournament.all(:order => "start")
+    if @player
+      @tournaments = @player.tournaments.all(:order => "start")
+    else
+      @tournaments = Tournament.all(:order => "start")
+    end
   end
 
   def show
@@ -63,4 +69,10 @@ class TournamentsController < ApplicationController
     end
   end
 
+protected
+  def find_player
+    unless params[:player_id].blank?
+      @player = Player.find(params[:player_id])
+    end
+  end
 end

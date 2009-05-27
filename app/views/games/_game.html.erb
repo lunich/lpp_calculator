@@ -1,6 +1,8 @@
 <div class="game <%= game.class %>" id="game-<%= game.id %>">
   <p class="date">
-    <%= format_time(game.time) %>
+    <span class="details">
+      <%= format_time(game.time) %>
+    </span>
     <span class="details">
       <%= link_to("[details]", game_path(game)) %>
     </span>

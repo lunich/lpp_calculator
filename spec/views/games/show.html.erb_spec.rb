@@ -15,8 +15,9 @@ describe "show" do
   end
 
   it "should render game result" do
-    response.should have_tag("p#game-#{@game.id}") do
-      with_tag("span", :class => "time", :text => @game.time.strftime("%d-%m-%Y"))
+    response.should have_tag("div#game-#{@game.id}") do
+      with_tag("span", :class => "time", :text => @game.time.strftime("%d.%m.%Y"))
+      with_tag("span", :class => "details", :text => "[details]")
       with_tag("span", @game.player1.name)
       with_tag("span", @game.player2.name)
     end

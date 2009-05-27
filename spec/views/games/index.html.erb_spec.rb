@@ -17,6 +17,7 @@ describe "index" do
       :match1 => match3, :match2 => match4,
       :result1 => 4, :result2 => 5)
     @games = [game1, game2]
+    @games.stub!(:total_entries => 10)
     @games.stub!(:total_pages => 2)
     @games.stub!(:current_page => 1)
     @games.stub!(:previous_page => 1)

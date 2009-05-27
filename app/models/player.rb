@@ -12,23 +12,33 @@ class Player < ActiveRecord::Base
 
   before_create :set_raking
 
+  # Tournaments particapations
   has_many :tournament_participations
-  has_many :tournaments, :through => :tournament_participations, :order => "time"
-  # All events
-  has_many :events, :order => "time DESC"
-  # Events except qualify_matches and qualifier_matches
-  has_many :raking_events, :class_name => "Event", :order => "time DESC",
-    :conditions => ["type NOT IN (?)", ["QualifyMatch", "QualifierMatch"]]
-  # Matches
-  has_many :matches, :order => "time DESC"
   # Tournaments
-  has_many :tours, :order => "time DESC"
+  has_many :tournaments, :through => :tournament_participations, :order => "tournaments.time"
+  # Qualification tournaments
+  has_many :qualify_tournaments, :through => :tournament_participations,
+    :class_name => "Tournament", :source => :tournament,
+    :order => "tournaments.end", :conditions => ["qualify=1"]
+  # All events
+  has_many :events, :order => "events.time DESC"
+  # Events except qualify_matches and qualifier_matches
+  has_many :raking_events, :class_name => "Event", :order => "events.time DESC",
+    :conditions => ["type NOT IN (?)", ["QualifyMatch", "QualifierMatch"]]
+  # Tournaments
+  has_many :tours, :order => "events.time DESC"
   # Qualification (it should be has_one but it's not usefull)
-  has_many :qualifications, :order => "time DESC"
+  has_many :qualifications, :order => "events.time DESC"
   # Qualifies
-  has_many :qualify_matches, :order => "time DESC"
+  has_many :qualify_matches, :order => "events.time DESC"
   # Qualifiers
-  has_many :qualifier_matches, :order => "time DESC"
+  has_many :qualifier_matches, :order => "events.time DESC"
+  # First event
+  has_one :first_event, :class_name => "Event", :order => "events.time"
+  # Matches
+  has_many :matches, :order => "events.time DESC"
+  # Games
+  has_many :games, :through => :matches, :order => "games.time"
 
   def self.all_active(from = Time.now)
     find(:all, :select => "players.*, sum(events.raking) as rak",
