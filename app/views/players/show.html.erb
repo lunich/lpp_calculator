@@ -16,7 +16,7 @@
     format_time(@player.qualify_tournaments.first.end) :
     format_time(@player.qualifications.first.time) %>
 </h3>
-<% @player.events.each do |e| %>
+<% @events.each do |e| %>
   <div class="event <%= e.class %>" id="event-<%= e.id %>">
     <p>
       <label>Date: </label>
@@ -42,3 +42,4 @@
     </p>
   </div>
 <% end %>
+<%= will_paginate(@events) %>

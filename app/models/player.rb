@@ -15,7 +15,7 @@ class Player < ActiveRecord::Base
   # Tournaments particapations
   has_many :tournament_participations
   # Tournaments
-  has_many :tournaments, :through => :tournament_participations, :order => "tournaments.time"
+  has_many :tournaments, :through => :tournament_participations
   # Qualification tournaments
   has_many :qualify_tournaments, :through => :tournament_participations,
     :class_name => "Tournament", :source => :tournament,
